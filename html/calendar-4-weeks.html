@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - 4 weeks</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .page {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pageHeader {
+            border-bottom: 1px solid black;
+            padding: 5px 10px;
+            font-size: 1.2rem;
+        }
+
+        .pageBody {
+            /* border: 1px solid black; */
+            flex: 1;
+            display: grid;
+            /* grid-template-columns: auto auto auto auto auto auto auto; */
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .day {
+            border-style: solid;
+            border-color: black;
+            border-width: 0 1px 1px 0;
+        }
+
+        .day:nth-child(7n + 7) {
+            border-right-width: 0;
+        }
+
+        .day:nth-child(21)~.day {
+            border-bottom-width: 0;
+        }
+
+        .header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const pages = 10;
+        var startingDate = new Date('2026/04/20');
+        function addDays(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+        var html = '';
+        for (let pageNum = 0; pageNum < pages; pageNum++) {
+            var lastDateOfPage = addDays(startingDate, 27);
+            var lastDateOfPageYear = lastDateOfPage.getFullYear();
+            var bonusYearText = (lastDateOfPageYear == startingDate.getFullYear()) ? '' : ' - ' + lastDateOfPageYear;
+            html += '<div class="page">';
+            html += `<div class="pageHeader">${startingDate.getFullYear()}${bonusYearText}</div>`;
+            html += '<div class="pageBody">';
+            for (let day = 0; day < 28; day++) {
+                html += '<div class="day">';
+                html += `<div class="header">${startingDate.toLocaleString('default', { weekday: 'short', month: 'numeric', day: "numeric" })}</div>`;
+                html += '</div>';
+                startingDate = addDays(startingDate, 1);
+            }
+            html += '</div>'
+            html += '</div>'
+
+        }
+
+        document.body.innerHTML = html;
+    </script>
+
+</body>
+
+</html>

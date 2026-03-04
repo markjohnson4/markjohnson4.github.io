@@ -59,13 +59,15 @@
 <body>
     <script>
         const pages = 10;
-        var startingDate = new Date('2026/04/20');
+        var startingDate = new Date('2026/01/01');
         function addDays(date, days) {
             var result = new Date(date);
             result.setDate(result.getDate() + days);
             return result;
         }
         var html = '';
+        
+        // makes the header and body for each page
         for (let pageNum = 0; pageNum < pages; pageNum++) {
             var lastDateOfPage = addDays(startingDate, 27);
             var lastDateOfPageYear = lastDateOfPage.getFullYear();
@@ -73,6 +75,8 @@
             html += '<div class="page">';
             html += `<div class="pageHeader">${startingDate.getFullYear()}${bonusYearText}</div>`;
             html += '<div class="pageBody">';
+            
+            // makes all the dates in the page's body...
             for (let day = 0; day < 28; day++) {
                 html += '<div class="day">';
                 html += `<div class="header">${startingDate.toLocaleString('default', { weekday: 'short', month: 'numeric', day: "numeric" })}</div>`;

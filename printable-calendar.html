@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar - 4 weeks</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+        }
+
+        .page {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pageHeader {
+            border-bottom: 1px solid black;
+            padding: 5px 10px;
+            font-size: 1.2rem;
+        }
+
+        .pageBody {
+            /* border: 1px solid black; */
+            flex: 1;
+            display: grid;
+            /* grid-template-columns: auto auto auto auto auto auto auto; */
+            grid-template-columns: repeat(7, 1fr);
+        }
+
+        .day {
+            border-style: solid;
+            border-color: black;
+            border-width: 0 1px 1px 0;
+        }
+
+        .day:nth-child(7n + 7) {
+            border-right-width: 0;
+        }
+
+        .day:nth-child(21)~.day {
+            border-bottom-width: 0;
+        }
+
+        .header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 5px;
+        }
+        .textWrap {
+            margin: 1rem auto;
+            max-width: 40ch;
+            padding: 1rem;
+            border: 2px solid rgb(45, 152, 246);
+            background-color: azure;
+        }
+        p, label {
+            display: block;
+            margin: 1rem 0;
+        }
+        label > span {
+            display: block;
+            padding-bottom: 0.2rem;
+        }
+        .textInput, select {
+            padding: 0.5rem;
+            width: 100%;
+            border: 1px solid black;
+        }
+        button {
+            border: 1px solid black;
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+
+        }
+        
+
+        @media print {
+            .noPrint {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="noPrint textWrap">
+        <h1>Printable Calendar</h1>
+        <p>A printable calendar with a fixed number of dates per page.</p>
+        <p>Fill out the below form and click submit to generate the calendar.</p>
+        <p>This box will not be visible when you print.</p>
+        <form action="">
+            <label>
+                <span>Starting Date</span>
+                <input class="textInput" type="date" name="startingDate" required />
+            </label>
+            <label>
+                <span>Weeks per Page</span>
+                <select name="weeksPerPage" required>
+                    <option value="">Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </label>
+            <label>
+                <span>Total Pages</span>
+                <input class="textInput" type="number" name="totalPages" required>
+            </label>
+            <!-- <label>
+                <span>Left Column Day of the Week</span>
+                <select name="leftColumnDay" required>
+                    <option value="">Select</option>
+                    <option value="sunday">Sunday</option>
+                    <option value="monday">Monday</option>
+                </select>
+            </label> -->
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div id="calendarWrapper"></div>
+    <script>
+        // if the form was submitted and the url has new search parameters, then auto-populate the form to whatever those are
+        // like this: https://stackoverflow.com/questions/14070105/pre-fill-form-field-via-url-in-html
+
+        // a formData object to be used in the app
+        var formData = {};
+
+        // getting data in the form piece by piece
+        var urlObject = new URL(window.location.href);
+
+        urlObject.searchParams.forEach((value, name) => {
+            // save the info to the formData object
+            formData[name] = value;
+
+            // put data back into form
+            var input = document.querySelector(`[name="${name}"]`);
+            if (input) {
+                var inputType = input.type;
+                if (inputType == 'checkbox') {
+                    if (value == 'on') {
+                        
+                        input.checked = true;
+                    }
+                }
+                else if (inputType == 'radio') {
+                    document.querySelector('[name="' + name + '"][value="' + value + '"]').checked = true;
+                }
+                else {
+                    document.querySelector('[name="' + name + '"]').value = value;
+                }
+            }
+        });
+        
+
+        // the code for the app
+        const pages = formData.totalPages;
+        const totalDays = formData.weeksPerPage*7;
+        var startingDate = new Date(formData.startingDate);
+        function addDays(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+        var html = '';
+        for (let pageNum = 0; pageNum < pages; pageNum++) {
+            var lastDateOfPage = addDays(startingDate, (totalDays - 1));
+            var lastDateOfPageYear = lastDateOfPage.getFullYear();
+            var bonusYearText = (lastDateOfPageYear == startingDate.getFullYear()) ? '' : ' - ' + lastDateOfPageYear;
+            html += '<div class="page">';
+            html += `<div class="pageHeader">${startingDate.getFullYear()}${bonusYearText}</div>`;
+            html += '<div class="pageBody">';
+            for (let day = 0; day < totalDays; day++) {
+                html += '<div class="day">';
+                html += `<div class="header">${startingDate.toLocaleString('default', { weekday: 'short', month: 'numeric', day: "numeric", timeZone: 'UTC' })}</div>`;
+                html += '</div>';
+                startingDate = addDays(startingDate, 1);
+            }
+            html += '</div>'
+            html += '</div>'
+
+        }
+
+        document.getElementById('calendarWrapper').innerHTML = html;
+    </script>
+
+</body>
+
+</html>

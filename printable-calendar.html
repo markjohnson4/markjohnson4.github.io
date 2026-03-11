@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,6 +54,7 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             padding: 5px;
         }
+
         .textWrap {
             margin: 1rem auto;
             max-width: 40ch;
@@ -60,19 +62,25 @@
             border: 2px solid rgb(45, 152, 246);
             background-color: azure;
         }
-        p, label {
+
+        p,
+        label {
             display: block;
             margin: 1rem 0;
         }
-        label > span {
+
+        label>span {
             display: block;
             padding-bottom: 0.2rem;
         }
-        .textInput, select {
+
+        .textInput,
+        select {
             padding: 0.5rem;
             width: 100%;
             border: 1px solid black;
         }
+
         button {
             border: 1px solid black;
             padding: 1rem;
@@ -80,7 +88,31 @@
             width: 100%;
 
         }
-        
+
+        /* 
+        https://www.lingulo.com/quick-tips/how-to-fix-the-cropping-off-in-date-inputs-on-mobile-devices
+        */
+        ::-webkit-clear-button {
+            display: none;
+            /* Hide the button */
+            -webkit-appearance: none;
+            /* turn off default browser styling */
+        }
+
+        ::-webkit-inner-spin-button {
+            display: none;
+            /* Hide the spinner */
+            -webkit-appearance: none;
+            /* turn off default browser styling */
+        }
+
+        ::-webkit-calendar-picker-indicator {
+            display: none;
+            /* Hide the picker */
+            -webkit-appearance: none;
+            /* turn off default browser styling */
+        }
+
 
         @media print {
             .noPrint {
@@ -89,6 +121,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="noPrint textWrap">
         <h1>Printable Calendar</h1>
@@ -98,7 +131,7 @@
         <form action="">
             <label>
                 <span>Starting Date</span>
-                <input class="textInput" type="date" name="startingDate" required />
+                <input class="textInput_" type="date" name="startingDate" required />
             </label>
             <label>
                 <span>Weeks per Page</span>
@@ -148,7 +181,7 @@
                 var inputType = input.type;
                 if (inputType == 'checkbox') {
                     if (value == 'on') {
-                        
+
                         input.checked = true;
                     }
                 }
@@ -160,11 +193,11 @@
                 }
             }
         });
-        
+
 
         // the code for the app
         const pages = formData.totalPages;
-        const totalDays = formData.weeksPerPage*7;
+        const totalDays = formData.weeksPerPage * 7;
         var startingDate = new Date(formData.startingDate);
         function addDays(date, days) {
             var result = new Date(date);

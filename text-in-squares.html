@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zine grid</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+        }
+        @media print {
+            .noPrint {
+                display: none;
+            }
+        }
+        /* form */
+        .textInput,
+        select {
+            padding: 0.5rem;
+            display: block;
+            border: 1px solid black;
+        }
+
+        button {
+            border: 1px solid black;
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+
+        }
+        .textWrap {
+            margin: 1rem auto;
+            max-width: 40ch;
+            padding: 1rem;
+            border: 2px solid rgb(45, 152, 246);
+            background-color: azure;
+        }
+        p,
+        label {
+            display: block;
+            margin: 1rem 0;
+        }
+        label>span {
+            display: block;
+            padding-bottom: 0.2rem;
+        }
+
+        /* app */
+        :root {
+            
+            
+        }
+        :root {
+            --cmPerInch: 2.54;
+            --pointsPerInch: 72pt;
+            --pointsPerCm: calc(var(--pointsPerInch)/var(--cmPerInch));
+            --pageWidth: calc(var(--pointsPerInch)*8.5);
+            --pageHeight: calc(var(--pointsPerInch)*11);
+            --boxSideA: calc(var(--pageWidth)/2);
+            --boxSideB: calc(var(--pageHeight)/4);
+
+            --pageMarginTop: 9pt;
+            --pageMarginRight: 9pt;
+            --pageMarginBottom: 9pt;
+            --pageMarginLeft: 9pt;  
+            --innerGap: 9pt;
+        }
+        .page {
+            /* width: var(--pageWidth);
+            height: var(--pageHeight);
+            display: flex;
+            flex-wrap: wrap; */
+
+            /* test only  */
+            /* padding: var(--pageMarginTop) var(--pageMarginRight) var(--pageMarginBottom) var(--pageMarginLeft); */
+        }
+        .page > div {
+            
+            height: var(--boxSideA);
+            width: var(--boxSideB);
+            /* background-color: rgba(0, 0, 0, 0.5); */
+            border: 1px solid black;
+            padding: var(--innerGap);
+        }
+        /* right side of page...  */
+        .page > div:nth-child(1),
+        .page > div:nth-child(8),
+        .page > div:nth-child(6),
+        .page > div:nth-child(7) {
+            height: calc(var(--boxSideA) - var(--pageMarginRight));
+            padding-bottom: 0;
+        }
+        .page > div:nth-child(2),
+        .page > div:nth-child(3),
+        .page > div:nth-child(4),
+        .page > div:nth-child(5) {
+            height: calc(var(--boxSideA) - var(--pageMarginLeft));
+            padding-bottom: 0;
+        }
+        .page > div:nth-child(1),
+        .page > div:nth-child(2) {
+            width: calc(var(--boxSideB) - var(--pageMarginTop));
+        }
+        .page > div:nth-child(1) {
+            padding-right: 0;
+        }
+        .page > div:nth-child(6) {
+            padding-left: 0;
+        }
+        .page > div:nth-child(5) {
+            padding-right: 0;
+        }
+        .page > div:nth-child(2) {
+            padding-left: 0;
+        }
+        .page > div:nth-child(5),
+        .page > div:nth-child(6) {
+            width: calc(var(--boxSideB) - var(--pageMarginBottom));
+        }
+        
+
+    </style>
+</head>
+
+<body>
+
+    <div class="noPrint textWrap">
+        <h1>Printable Schedule</h1>
+        <p>A printable schedule with options for making space for custom lists.</p>
+        <p>Fill out the below form and click submit to generate the planner.</p>
+        <p><strong>This box will not be visible when you print.</strong></p>
+        <form action="">
+
+            <label>
+                <span>Text</span>
+                <textarea name="text"></textarea>
+            </label>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div id="html"></div>
+    <div class="page">
+        <div id="page1"></div>
+        <div id="page2"></div>
+        <div id="page3"></div>
+        <div id="page4"></div>
+        <div id="page5"></div>
+        <div id="page6"></div>
+        <div id="page7"></div>
+        <div id="page8"></div>
+    </div>
+
+</body>
+<script src="https://unpkg.com/split-type"></script>
+
+<script>
+        // if the form was submitted and the url has new search parameters, then auto-populate the form to whatever those are
+        // like this: https://stackoverflow.com/questions/14070105/pre-fill-form-field-via-url-in-html
+
+        // a formData object to be used in the app
+        var formData = {};
+
+        // getting data in the form piece by piece
+        var urlObject = new URL(window.location.href);
+
+
+        urlObject.searchParams.forEach((value, name) => {
+            // save the info to the formData object
+            formData[name] = value;
+
+            // put data back into form
+            var input = document.querySelector(`[name="${name}"]`);
+            if (input) {
+                var inputType = input.type;
+                if (inputType == 'checkbox') {
+                    if (value == 'on') {
+
+                        input.checked = true;
+                    }
+                }
+                else if (inputType == 'radio') {
+                    document.querySelector('[name="' + name + '"][value="' + value + '"]').checked = true;
+                }
+                else {
+                    document.querySelector('[name="' + name + '"]').value = value;
+                }
+            }
+        });
+
+
+
+
+        // the code for the app
+        const text = formData.text;
+
+        document.getElementById('page1').innerHTML = text;
+
+        const linedText = new SplitType('#page1');
+
+        // var html = '';
+        
+        // document.getElementById('html').innerHTML = html;
+    </script>
+
+</html>

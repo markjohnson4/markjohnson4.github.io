@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printable Schedule</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+        }
+
+        .page {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pageHeader {
+            border-bottom: 1px solid black;
+            padding: 5px 10px;
+            font-size: 1.2rem;
+        }
+
+        .pageBody {
+            /* border: 1px solid black; */
+            flex: 1;
+            display: flex;
+
+        }
+
+
+
+
+        .header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 5px;
+        }
+
+        .textWrap {
+            margin: 1rem auto;
+            max-width: 40ch;
+            padding: 1rem;
+            border: 2px solid rgb(45, 152, 246);
+            background-color: azure;
+        }
+
+        p,
+        label {
+            display: block;
+            margin: 1rem 0;
+        }
+
+        label>span {
+            display: block;
+            padding-bottom: 0.2rem;
+        }
+
+        .textInput,
+        select {
+            padding: 0.5rem;
+            display: block;
+            border: 1px solid black;
+        }
+
+        button {
+            border: 1px solid black;
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+
+        }
+
+        @media print {
+            .noPrint {
+                display: none;
+            }
+        }
+
+        /* app  */
+        .timeCol {
+            text-align: right;
+        }
+
+        .dayCol {
+            flex: 1;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .col+.col {
+            border-left: 1px solid black;
+        }
+
+        .timeBlock {
+            flex: 1;
+            border-bottom: 1px dotted rgba(0, 0, 0, 0.2);
+        }
+
+        .timeHeader {
+            border-bottom: 1px solid black;
+        }
+
+        .colHeader {
+            border-bottom: 1px solid black;
+        }
+
+        .timeCol .timeBlock,
+        .timeCol .colHeader {
+
+            padding-right: 10px;
+        }
+
+        .timeText {
+            background-color: white;
+            display: inline-block;
+            padding: 0 2px;
+            transform: translateY(-50%);
+        }
+
+        /* .timeCol .timeBlock {
+            border-bottom-color: transparent;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="noPrint textWrap">
+        <h1>Printable Schedule</h1>
+        <p>A printable schedule with options for making space for custom lists.</p>
+        <p>Fill out the below form and click submit to generate the planner.</p>
+        <p><strong>This box will not be visible when you print.</strong></p>
+        <form action="">
+            <!-- <label>
+                <span>Starting Date</span>
+                <input class="textInput" type="date" name="startingDate" required />
+            </label>
+            <label>
+                <span>Display Starting Date</span>
+                <select name="displayStartingDate" required>
+                    <option value="">Select</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </label> -->
+            <label>
+                <span>Number of Days to Display per Page</span>
+                <select name="daysPerPage" required>
+                    <option value="">Select</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                </select>
+            </label>
+            <label>
+                <span>Total Pages</span>
+                <input class="textInput" type="number" name="totalPages" required>
+            </label>
+            <label>
+                <span>Start Time (exact hour required)</span>
+                <input type="time" name="startTime" step="3600">
+            </label>
+            <label>
+                <span>End Time (exact hour required)</span>
+                <input type="time" name="endTime" step="3600">
+            </label>
+            <label>
+                <span>Time increments</span>
+                <select name="timeIncrements" required>
+                    <option value="">Select</option>
+                    <option value="half-hour">Half-hour</option>
+                    <option value="hour">Hour</option>
+                </select>
+            </label>
+            <!-- <label>
+                <span>Custom List Titles</span>
+                <span>These should each be on their own line. Create an empty line to define the start of a new
+                    column.</span>
+                <textarea name="customListTitles"></textarea>
+            </label> -->
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div id="html"></div>
+    <script>
+        // if the form was submitted and the url has new search parameters, then auto-populate the form to whatever those are
+        // like this: https://stackoverflow.com/questions/14070105/pre-fill-form-field-via-url-in-html
+
+        // a formData object to be used in the app
+        var formData = {};
+
+        // getting data in the form piece by piece
+        var urlObject = new URL(window.location.href);
+
+
+        urlObject.searchParams.forEach((value, name) => {
+            // save the info to the formData object
+            formData[name] = value;
+
+            // put data back into form
+            var input = document.querySelector(`[name="${name}"]`);
+            if (input) {
+                var inputType = input.type;
+                if (inputType == 'checkbox') {
+                    if (value == 'on') {
+
+                        input.checked = true;
+                    }
+                }
+                else if (inputType == 'radio') {
+                    document.querySelector('[name="' + name + '"][value="' + value + '"]').checked = true;
+                }
+                else {
+                    document.querySelector('[name="' + name + '"]').value = value;
+                }
+            }
+        });
+
+
+
+
+        // the code for the app
+        const pages = formData.totalPages;
+        var startingDate = new Date(formData.startingDate);
+        function addDays(date, days) {
+            var result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+        function militaryTimeToHour(time) {
+            let arr = time.split(':');
+            return Number(arr[0]);
+        }
+        function militaryTimeToMinutes(time) {
+            let arr = time.split(':');
+            return Number(arr[0] * 60) + Number(arr[1]);
+        }
+        function minutesToStandardTime(minutes) {
+            let minuteNumber = minutes % 60;
+            if (minuteNumber == 0) {
+                minuteNumber = '00';
+            }
+            let hourNumber = Math.floor(minutes / 60);
+            let standardPart = 'AM'
+            if (hourNumber > 12) {
+                standardPart = 'PM';
+                hourNumber -= 12;
+            }
+            let minuteAppended = (formData.timeIncrements == 'hour') ? '' : ':' + minuteNumber;
+            return hourNumber + minuteAppended + ' ' + standardPart;
+        }
+        function getHoursDiffFromStartAndEndTimes(startTime, endTime) {
+            const startTimeHour = militaryTimeToHour(startTime);
+            const endTimeHour = militaryTimeToHour(endTime);
+            let startEndHoursDiff = endTimeHour - startTimeHour;
+            if (startEndHoursDiff < 0) {
+                startEndHoursDiff += 24;
+            }
+            return startEndHoursDiff;
+        }
+        var html = '';
+
+        // 1. I want to make a grid of time-blocks based on 1) number of days to be displayed per page (columns) and 2) number of time-blocks per day (rows), which is calculated by subtracting the military end time from the start time and optionally multiplying by two if half-hours are selected...
+        console.log('formData: '); console.log(formData);
+        const totalHours = getHoursDiffFromStartAndEndTimes(formData.startTime, formData.endTime);
+        console.log('totalHours: '); console.log(totalHours);
+
+
+        const timeInrements = formData.timeIncrements;
+
+        const totalTimeBlocks = (timeInrements == 'half-hour') ? totalHours * 2 : totalHours;
+
+        let timeArray = [];
+        let timeCounter = militaryTimeToMinutes(formData.startTime);
+        for (let index = 0; index < totalTimeBlocks; index++) {
+            timeArray.push(minutesToStandardTime(timeCounter));
+            if (timeInrements == 'half-hour') {
+                timeCounter += 30;
+            }
+            else {
+                timeCounter += 60;
+            }
+        }
+        for (let p = 0; p < formData.totalPages; p++) {
+
+            html += '<div class="page">';
+            // html += `<div class="pageHeader"></div>`;
+            html += '<div class="pageBody">';
+            html += '<div class="col timeCol">';
+            html += '<div class="timeBlock timeHeader"></div>';
+            for (let index = 0; index < timeArray.length; index++) {
+                const time = timeArray[index];
+                html += `<div class="timeBlock"><span class="timeText">${time}</span></div>`;
+            }
+            html += '</div>';
+            for (let i = 0; i < formData.daysPerPage; i++) {
+                html += '<div class="col dayCol">';
+                html += '<div class="timeBlock timeHeader"></div>';
+                for (let index = 0; index < timeArray.length; index++) {
+                    html += `<div class="timeBlock"></div>`;
+                }
+                html += '</div>';
+
+            }
+            html += '</div>';
+            html += '</div>';
+
+        } 
+
+        document.getElementById('html').innerHTML = html;
+    </script>
+
+</body>
+
+</html>

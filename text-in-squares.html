@@ -5,14 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zine grid</title>
+    <link rel="preload" href="static/OpenDyslexic-Regular.otf" as="font" crossorigin="anonymous" />
+
     <style>
+        @font-face {
+  font-family: 'Open-Dyslexic';
+  src: url('static/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             border: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: large;
         }
         @media print {
             .noPrint {
@@ -34,12 +40,18 @@
             width: 100%;
 
         }
+        .textWrap * {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+            line-height: 1.5;
+        }
         .textWrap {
             margin: 1rem auto;
             max-width: 40ch;
             padding: 1rem;
             border: 2px solid rgb(45, 152, 246);
             background-color: azure;
+            
         }
         p,
         label {
@@ -53,90 +65,201 @@
 
         /* app */
         :root {
-            
-            
-        }
-        :root {
             --cmPerInch: 2.54;
-            --pointsPerInch: 72pt;
+            --pointsPerInch: 72;
             --pointsPerCm: calc(var(--pointsPerInch)/var(--cmPerInch));
-            --pageWidth: calc(var(--pointsPerInch)*8.5);
-            --pageHeight: calc(var(--pointsPerInch)*11);
-            --boxSideA: calc(var(--pageWidth)/2);
-            --boxSideB: calc(var(--pageHeight)/4);
+            --pageWidthPt: calc(var(--pointsPerInch)*8.5pt);
+            --pageHeightPt: calc(var(--pointsPerInch)*11pt);
 
-            --pageMarginTop: 9pt;
-            --pageMarginRight: 9pt;
-            --pageMarginBottom: 9pt;
-            --pageMarginLeft: 9pt;  
-            --innerGap: 9pt;
+            --defaultZinePageHeightPt: calc(var(--pageWidthPt)/2);
+            --defaultZinePageWidthPt: calc(var(--pageHeightPt)/4);
+
+            --leftMarginPt: calc(var(--leftMarginCm)*var(--pointsPerCm)*1pt);
+            --rightMarginPt: calc(var(--rightMarginCm)*var(--pointsPerCm)*1pt);
+            --topMarginPt: calc(var(--topMarginCm)*var(--pointsPerCm)*1pt);
+            --bottomMarginPt: calc(var(--bottomMarginCm)*var(--pointsPerCm)*1pt);
+
+            --adjustedPageWidthPt: calc(var(--pageWidthPt) - var(--leftMarginPt) - var(--rightMarginPt));
+            --adjustedPageHeightPt: calc(var(--pageHeightPt) - var(--topMarginPt) - var(--bottomMarginPt));
+
+            
+            --leftSideZinePagesHeightPt: calc(var(--defaultZinePageHeightPt) - var(--leftMarginPt));
+            --rightSideZinePagesHeightPt: calc(var(--defaultZinePageHeightPt) - var(--rightMarginPt));
+            --topSideZinePagesWidthPt: calc(var(--defaultZinePageWidthPt) - var(--topMarginPt));
+            --bottomSideZinePagesWidthPt: calc(var(--defaultZinePageWidthPt) - var(--bottomMarginPt));
         }
         .page {
-            /* width: var(--pageWidth);
-            height: var(--pageHeight);
-            display: flex;
-            flex-wrap: wrap; */
-
-            /* test only  */
-            /* padding: var(--pageMarginTop) var(--pageMarginRight) var(--pageMarginBottom) var(--pageMarginLeft); */
+            position: relative;
+            width: var(--adjustedPageWidthPt);
+            height: var(--adjustedPageHeightPt);
+            font-family: var(--font);
+            font-size: calc(var(--textSize)*1px);
+            line-height: var(--lineHeight);
         }
         .page > div {
             
-            height: var(--boxSideA);
-            width: var(--boxSideB);
-            /* background-color: rgba(0, 0, 0, 0.5); */
-            border: 1px solid black;
-            padding: var(--innerGap);
+            height: var(--defaultZinePageHeightPt);
+            width: var(--defaultZinePageWidthPt);
+            padding: var(--boxPad);
+            padding-bottom: 0;
+        }
+        /* left side of page...  */
+        .page > div:nth-child(8),
+        .page > div:nth-child(1),
+        .page > div:nth-child(2),
+        .page > div:nth-child(3) {
+            height: var(--leftSideZinePagesHeightPt);
+            border-top: 1px dashed rgba(0, 0, 0, 0.5);
+            border-right: 1px dashed rgba(0, 0, 0, 0.5);
+        }
+        .page > div:nth-child(3) {
+            border-right: none;
         }
         /* right side of page...  */
-        .page > div:nth-child(1),
-        .page > div:nth-child(8),
+        .page > div:nth-child(7),
         .page > div:nth-child(6),
-        .page > div:nth-child(7) {
-            height: calc(var(--boxSideA) - var(--pageMarginRight));
-            padding-bottom: 0;
-        }
-        .page > div:nth-child(2),
-        .page > div:nth-child(3),
-        .page > div:nth-child(4),
-        .page > div:nth-child(5) {
-            height: calc(var(--boxSideA) - var(--pageMarginLeft));
-            padding-bottom: 0;
-        }
-        .page > div:nth-child(1),
-        .page > div:nth-child(2) {
-            width: calc(var(--boxSideB) - var(--pageMarginTop));
-        }
-        .page > div:nth-child(1) {
-            padding-right: 0;
-        }
-        .page > div:nth-child(6) {
-            padding-left: 0;
-        }
-        .page > div:nth-child(5) {
-            padding-right: 0;
-        }
-        .page > div:nth-child(2) {
-            padding-left: 0;
-        }
         .page > div:nth-child(5),
-        .page > div:nth-child(6) {
-            width: calc(var(--boxSideB) - var(--pageMarginBottom));
+        .page > div:nth-child(4) {
+            height: var(--rightSideZinePagesHeightPt);
+            border-left: 1px dashed rgba(0, 0, 0, 0.5);
+        }
+        .page > div:nth-child(4) {
+            border-left: none;
         }
         
+        /* top of page  */
+        .page > div:nth-child(8),
+        .page > div:nth-child(7) {
+            width: var(--topSideZinePagesWidthPt);
+        }
+        /* bottom of page  */
+        .page > div:nth-child(3),
+        .page > div:nth-child(4) {
+            width: var(--bottomSideZinePagesWidthPt);
+        }
+        .page > div:nth-child(8) {
+            padding-left: 0;
+        }
+        .page > div:nth-child(7) {
+            padding-right: 0;
+        }
+        .page > div:nth-child(3) {
+            padding-right: 0;
+        }
+        .page > div:nth-child(4) {
+            padding-left: 0;
+        }
+        /* positioning...  */
+        /* right side of page...  */
+        @media print {
+        .page > div {
+            position: absolute;
+        }
+        /* left side of the page  */
+        .page > div:nth-child(8),
+        .page > div:nth-child(1),
+        .page > div:nth-child(2),
+        .page > div:nth-child(3) {
+            left: var(--leftSideZinePagesHeightPt);
+            transform-origin: top left;
+        }
+        .page > div:nth-child(8) {
+            transform: rotate(0.25turn);
+        }
+        .page > div:nth-child(1) {
+            transform: translateY(var(--topSideZinePagesWidthPt))  rotate(0.25turn);
+        }
+        .page > div:nth-child(2) {
+            transform: translateY(calc(var(--topSideZinePagesWidthPt) + var(--defaultZinePageWidthPt)))  rotate(0.25turn);
+        }
+        .page > div:nth-child(3) {
+            transform: translateY(calc(var(--topSideZinePagesWidthPt) + var(--defaultZinePageWidthPt)*2))  rotate(0.25turn);
+        }
+        /* right side of page  */
+        .page > div:nth-child(7),
+        .page > div:nth-child(6),
+        .page > div:nth-child(5),
+        .page > div:nth-child(4) {
+            right: var(--rightSideZinePagesHeightPt);
+            transform-origin: top right;
+        }
+        .page > div:nth-child(7) {
+            transform: rotate(-0.25turn);
+        }
+        .page > div:nth-child(6) {
+            transform: translateY(var(--topSideZinePagesWidthPt)) rotate(-0.25turn);
+        }
+        .page > div:nth-child(5) {
+            transform: translateY(calc(var(--topSideZinePagesWidthPt) + var(--defaultZinePageWidthPt))) rotate(-0.25turn);
+        }
+        .page > div:nth-child(4) {
+            transform: translateY(calc(var(--topSideZinePagesWidthPt) + var(--defaultZinePageWidthPt)*2))  rotate(-0.25turn);
+        }
+        
+    }
 
+        .page {
+            font-kerning: none; 
+            /* requirement of splittype */
+        }
+        .blankLine {
+            opacity: 0;
+            display: block !important;
+        }
+        #alert {
+            margin-bottom: 1rem;
+            border: 1px solid black;
+            padding: 1rem;
+            background-color: #fff;
+            color: red;
+        }
+        #alert:empty {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
 
     <div class="noPrint textWrap">
-        <h1>Printable Schedule</h1>
-        <p>A printable schedule with options for making space for custom lists.</p>
-        <p>Fill out the below form and click submit to generate the planner.</p>
+        <div id="alert"></div>
+        <h1>Quick Zine</h1>
+        <p>Turn text into a zine!</p>
         <p><strong>This box will not be visible when you print.</strong></p>
         <form action="">
-
+            <label>
+                <span>Inner Padding of each Page (cm)</span>
+                <input type="number" name="innerPagePadding" />
+            </label>
+            <label>
+                <span>Top Margin (cm)</span>
+                <input type="number" name="topMarginCm" />
+            </label>
+            <label>
+                <span>Right Margin (cm)</span>
+                <input type="number" name="rightMarginCm" />
+            </label>
+            <label>
+                <span>Bottom Margin (cm)</span>
+                <input type="number" name="bottomMarginCm" />
+            </label>
+            <label>
+                <span>Left Margin (cm)</span>
+                <input type="number" name="leftMarginCm" />
+            </label>
+            <label>
+                <span>Text Size (pixels)</span>
+                <input type="number" name="textSize" />
+            </label>
+            <label>
+                <span>Text Line Height (Multiplier of Text Size)</span>
+                <input type="number" name="lineHeight" step="0.1" />
+            </label>
+            <label>
+                <span>Text Font</span>
+                <input type="text" name="font" />
+            </label>
+            <p>"Text Font" can be any <a href="https://www.w3schools.com/cssref/css_websafe_fonts.php" target="_blank">browser supported font</a> or <code>'Open-Dyslexic'</code> (currently buggy - I'm working on it!)</p>
             <label>
                 <span>Text</span>
                 <textarea name="text"></textarea>
@@ -193,19 +316,107 @@
             }
         });
 
+        // clean up text
+        var text = formData.text;
+        text = text.replace(/\n\s*\n/g, '<div class="blankLine">.</div>');
+        text = text.replace(/(\n)+/g, '<br />');
+        function convertCmToPts(cm) {
+            return 72/(cm*2.54) + 'pt';
+        }
 
+        document.documentElement.style.setProperty('--textSize', formData.textSize);
+        document.documentElement.style.setProperty('--lineHeight', formData.lineHeight);
+        document.documentElement.style.setProperty('--font', formData.font);
 
-
-        // the code for the app
-        const text = formData.text;
-
-        document.getElementById('page1').innerHTML = text;
-
-        const linedText = new SplitType('#page1');
-
-        // var html = '';
+        const topMarginCm = formData.topMarginCm;
+        const rightMarginCm = formData.rightMarginCm;
+        const bottomMarginCm = formData.bottomMarginCm;
+        const leftMarginCm = formData.leftMarginCm;
+        document.documentElement.style.setProperty('--boxPad', convertCmToPts(formData.innerPagePadding));
+        document.documentElement.style.setProperty('--topMarginCm', formData.topMarginCm);
+        document.documentElement.style.setProperty('--rightMarginCm', formData.rightMarginCm);
+        document.documentElement.style.setProperty('--bottomMarginCm', formData.bottomMarginCm);
+        document.documentElement.style.setProperty('--leftMarginCm', formData.leftMarginCm);
         
-        // document.getElementById('html').innerHTML = html;
+
+        const cmPerInch = 2.54;
+        const pageWidthInches = 8.5;
+        const pageHeightInches = 11;
+
+        const pageWidthCm = pageWidthInches*cmPerInch;
+        const pageHeightCm = pageHeightInches*cmPerInch;
+
+        const zinePageDefaultWidthCm = pageHeightCm/4;
+        const zinePageDefaultHeightCm = pageWidthCm/2;
+        
+
+        document.documentElement.style.setProperty('--zinePageDefaultWidthCm', zinePageDefaultWidthCm);
+        document.documentElement.style.setProperty('--zinePageDefaultHeightCm', zinePageDefaultHeightCm);
+
+        const actualPageContentHeightCm = pageHeightCm - topMarginCm - bottomMarginCm;
+        const actualPageContentWidthCm = pageWidthCm - rightMarginCm - leftMarginCm;
+
+        document.documentElement.style.setProperty('--actualPageContentHeightCm', actualPageContentHeightCm);
+        document.documentElement.style.setProperty('--actualPageContentWidthCm', actualPageContentWidthCm);
+
+        // const topMarginVh = topMarginCm*100/pageHeightCm;
+        // const rightMarginVw = rightMarginCm*100/pageWidthCm;
+        // const bottomMarginVh = bottomMarginCm*100/pageHeightCm;
+        // const leftMarginVw = leftMarginCm*100/pageWidthCm;
+
+        // const 
+
+        // const pageTopZinePagesAltWidth = 
+
+
+        var linesCounter = 0;
+        const totalPages = 8;
+        var totalLines;
+
+        // For every page... 
+        // 1. I get the total possible lines that could exist given that page's boundaries
+        // 2. I dump the entire text in the page so the text wraps correctly based on that page's boundaries
+        // 3. I take out only the lines that belong to that page and dump them in the page html box 
+        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+            var thisPageId = 'page'+pageNum;
+            var thisPage = document.getElementById(thisPageId);
+            thisPage.innerHTML = text;
+            
+            const linedText = new SplitType('#'+thisPageId, { types: 'lines' });
+            var totalHeight = thisPage.clientHeight;
+            var cs = getComputedStyle(thisPage);
+            var totalPagePaddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+            var contentHeight = totalHeight - totalPagePaddingY;
+            var lineHeight = cs.lineHeight;
+            var firstLineInfo = linedText.lines[0].getBoundingClientRect();
+            var maxLines = Math.floor(contentHeight/firstLineInfo.height);
+            var pageHtml = '';
+            for (let l = linesCounter; l < (linesCounter + maxLines); l++) {
+                if(l >= linedText.lines.length) {
+                    break;
+                }
+                const line = linedText.lines[l].outerHTML;
+                pageHtml += line;
+            }
+            thisPage.innerHTML = pageHtml;
+            linesCounter += maxLines;
+            if(pageNum == totalPages) {
+                totalLines = linedText.lines.length;
+            }
+        }
+        console.log('linesCounter: '); console.log(linesCounter);
+        console.log('totalLines: '); console.log(totalLines);
+        
+        // error message
+        const alertElement = document.getElementById('alert');
+        var excessLines = totalLines - linesCounter;
+        if(excessLines > 0) {
+            alertElement.innerHTML = `Warning! Your text has <strong>${excessLines}</strong> more lines than your zine has space for!`;
+        }
+        else {
+            alertElement.innerHTML = '';
+        }
+
     </script>
 
 </html>

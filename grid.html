@@ -84,6 +84,14 @@
         .page > div > div:first-child {
             border-left: var(--line);
         }
+        .btn {
+            cursor: pointer;
+            border: 1px solid black;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: white;
+            display: block;
+        }
 
     </style>
 </head>
@@ -103,6 +111,7 @@
                 <span>Rows</span>
                 <input type="number" name="rows" />
             </label>
+            <p><a class="btn" role="button" onclick="generateColumnsToMakeSquareCells()">Generate a column number to make the grid-cells squre-shaped (roughly)</a></p>
             <label>
                 <span>Columns</span>
                 <input type="number" name="columns" />
@@ -146,6 +155,14 @@
         var pageNum = formData.pages;
         var rowNum = formData.rows;
         var colNum = formData.columns;
+
+        const rowInput = document.querySelector('[name="rows"]');
+        const columnInput = document.querySelector('[name="columns"]');
+
+        function generateColumnsToMakeSquareCells() {
+            var colNum = Math.round((rowInput.value)*8.5/11);
+            columnInput.value = colNum;
+        }
 
         var html = '';
         for (let index = 0; index < pageNum; index++) {

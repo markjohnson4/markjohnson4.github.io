@@ -328,7 +328,7 @@
         text = text.replace(/\n\s*\n/g, '<div class="blankLine">.</div>');
         text = text.replace(/(\n)+/g, '<br />');
         function convertCmToPts(cm) {
-            return 72/(cm*2.54) + 'pt';
+            return (cm/2.54)*72 + 'pt';
         }
 
         document.documentElement.style.setProperty('--textSize', formData.textSize);

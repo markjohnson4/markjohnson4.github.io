@@ -250,26 +250,19 @@
         <p>Turn text into a zine!</p>
         <p><strong>This box will not be visible when you print.</strong></p>
         <form action="">
-            <label>
+            <label id="zinePagePaddingField">
                 <span>Inner Padding of each Page (cm)</span>
                 <input type="number" name="innerPagePadding" step="0.1" />
             </label>
-            <label>
-                <span>Top Margin (cm)</span>
-                <input type="number" name="topMarginCm" step="0.1" />
-            </label>
-            <label>
-                <span>Right Margin (cm)</span>
-                <input type="number" name="rightMarginCm" step="0.1" />
-            </label>
-            <label>
-                <span>Bottom Margin (cm)</span>
-                <input type="number" name="bottomMarginCm" step="0.1" />
-            </label>
-            <label>
-                <span>Left Margin (cm)</span>
-                <input type="number" name="leftMarginCm" step="0.1" />
-            </label>
+            <!-- <label>
+                <span>How does your printer deal with full width/height content?</span>
+                <select name="printerManipulation" required>
+                    <option value="">Select option</option>
+                    <option value="cutOff">It cuts off its edges</option>
+                    <option value="shrink">It shrinks it down</option>
+                </select>
+            </label> -->
+            
             <label>
                 <span>Text Size (pixels)</span>
                 <input type="number" name="textSize" />
@@ -286,6 +279,25 @@
             <label>
                 <span>Text</span>
                 <textarea name="text"></textarea>
+            </label>
+            <h2>Printer added margins</h2>
+            <p><a href="https://markjohnson4.github.io/grid.html?pages=1&rows=32&columns=25">Print a test grid</a> to see how your printer deals with full width/height content.</p>
+            <p>*If your printer cuts off the outer grid rectangles, then set all these margin fields to "0" and make sure your <a href="#zinePagePaddingField">zine page padding</a> is equal to or larger than how much content gets cut off from the edge.</p>
+            <label>
+                <span>Top Margin (cm)</span>
+                <input type="number" name="topMarginCm" step="0.1" />
+            </label>
+            <label>
+                <span>Right Margin (cm)</span>
+                <input type="number" name="rightMarginCm" step="0.1" />
+            </label>
+            <label>
+                <span>Bottom Margin (cm)</span>
+                <input type="number" name="bottomMarginCm" step="0.1" />
+            </label>
+            <label>
+                <span>Left Margin (cm)</span>
+                <input type="number" name="leftMarginCm" step="0.1" />
             </label>
             <button type="submit">Submit</button>
         </form>
@@ -345,7 +357,11 @@
 
         // clean up text
         var text = formData.text;
-        // console.log('originalText: '); console.log(originalText);
+        const printerManipulation = formData.printerManipulation;
+// if(printerManipulation == 'cutOff') {
+    // no zine pages should be reduced in size or boosted
+    // the zine padding 
+// }
         
         
         text = text.replace(/\n\s*\n/g, blankLineHtml);
@@ -408,11 +424,6 @@
         document.documentElement.style.setProperty('--bottomSideZinePagesWidthPt', boostedBottomZinePagesWidth+'pt');
         document.documentElement.style.setProperty('--leftSideZinePagesHeightPt', boostedLeftZinePagesHeight+'pt');
         document.documentElement.style.setProperty('--rightSideZinePagesHeightPt', boostedRightZinePagesHeight+'pt');
-
- 
-        
-        
-        
 
 
         document.documentElement.style.setProperty('--boxPad', convertCmToPts(formData.innerPagePadding)+'pt');

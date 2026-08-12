@@ -128,6 +128,7 @@
             height: var(--leftSideZinePagesHeightPt);
             border-top: 1px dashed rgba(0, 0, 0, 0.5);
             border-right: 1px dashed rgba(0, 0, 0, 0.5);
+            padding-bottom: var(--leftPageEdgeZinePadding);
         }
         .page > div:nth-child(3) {
             border-right: none;
@@ -139,6 +140,7 @@
         .page > div:nth-child(4) {
             height: var(--rightSideZinePagesHeightPt);
             border-left: 1px dashed rgba(0, 0, 0, 0.5);
+            padding-bottom: var(--rightPageEdgeZinePadding);
         }
         .page > div:nth-child(4) {
             border-left: none;
@@ -159,16 +161,16 @@
             padding-bottom: 0;
         }
         .page > div:nth-child(8) {
-            padding-left: 0;
+            padding-left: var(--topPageEdgeZinePadding);
         }
         .page > div:nth-child(7) {
-            padding-right: 0;
+            padding-right: var(--topPageEdgeZinePadding);
         }
         .page > div:nth-child(3) {
-            padding-right: 0;
+            padding-right: var(--bottomPageEdgeZinePadding);
         }
         .page > div:nth-child(4) {
-            padding-left: 0;
+            padding-left: var(--bottomPageEdgeZinePadding);
         } 
 
 
@@ -254,14 +256,7 @@
                 <span>Inner Padding of each Page (cm)</span>
                 <input type="number" name="innerPagePadding" step="0.1" />
             </label>
-            <!-- <label>
-                <span>How does your printer deal with full width/height content?</span>
-                <select name="printerManipulation" required>
-                    <option value="">Select option</option>
-                    <option value="cutOff">It cuts off its edges</option>
-                    <option value="shrink">It shrinks it down</option>
-                </select>
-            </label> -->
+            
             
             <label>
                 <span>Text Size (pixels)</span>
@@ -280,8 +275,17 @@
                 <span>Text</span>
                 <textarea name="text"></textarea>
             </label>
-            <h2>Printer added margins</h2>
+            <h2>Printer details</h2>
             <p><a href="https://markjohnson4.github.io/grid.html?pages=1&rows=32&columns=25">Print a test grid</a> to see how your printer deals with full width/height content.</p>
+            
+            <label>
+                <span>How does your printer deal with full width/height content?</span>
+                <select name="printerManipulation" required>
+                    <option value="">Select option</option>
+                    <option value="cutOff">It cuts off its edges</option>
+                    <option value="shrink">It shrinks it down</option>
+                </select>
+            </label>
             <p>*If your printer cuts off the outer grid rectangles, then set all these margin fields to "0" and make sure your <a href="#zinePagePaddingField">zine page padding</a> is equal to or larger than how much content gets cut off from the edge.</p>
             <label>
                 <span>Top Margin (cm)</span>
@@ -357,13 +361,6 @@
 
         // clean up text
         var text = formData.text;
-        const printerManipulation = formData.printerManipulation;
-// if(printerManipulation == 'cutOff') {
-    // no zine pages should be reduced in size or boosted
-    // the zine padding 
-// }
-        
-        
         text = text.replace(/\n\s*\n/g, blankLineHtml);
         text = text.replace(/(\n)+/g, lineBreakHtml);
         function convertCmToPts(cm) {
@@ -426,12 +423,41 @@
         document.documentElement.style.setProperty('--rightSideZinePagesHeightPt', boostedRightZinePagesHeight+'pt');
 
 
-        document.documentElement.style.setProperty('--boxPad', convertCmToPts(formData.innerPagePadding)+'pt');
+        
 
         document.documentElement.style.setProperty('--topMarginCm', formData.topMarginCm);
         document.documentElement.style.setProperty('--rightMarginCm', formData.rightMarginCm);
         document.documentElement.style.setProperty('--bottomMarginCm', formData.bottomMarginCm);
         document.documentElement.style.setProperty('--leftMarginCm', formData.leftMarginCm);
+
+        const printerManipulation = formData.printerManipulation;
+        // marky
+        const defaultZinePaddingPts = formData.innerPagePadding;
+        const defaultZinePadding = convertCmToPts(defaultZinePaddingPts)+'pt';
+        document.documentElement.style.setProperty('--boxPad', defaultZinePadding);
+        // var topEdgeZinePadding
+        var topPageEdgeZinePadding = defaultZinePadding;
+        var bottomPageEdgeZinePadding = defaultZinePadding;
+        var leftPageEdgeZinePadding = defaultZinePadding;
+        var rightPageEdgeZinePadding = defaultZinePadding;
+if(printerManipulation == 'cutOff') {
+    // no zine pages should be reduced in size or boosted - can be solved for now by making the margins "0"
+    // for each margin, if the edge padding is smaller, it should be increased to be equal
+    
+}
+else {
+// for each margin, if the margin is equal or greater than the padding, then the padding should be zero.  Otherwise the padding should be reduced by the amount of the margin
+// for now...
+var topPageEdgeZinePadding = 0;
+        var bottomPageEdgeZinePadding = 0;
+        var leftPageEdgeZinePadding = 0;
+        var rightPageEdgeZinePadding = 0;
+}
+
+document.documentElement.style.setProperty('--topPageEdgeZinePadding', topPageEdgeZinePadding);
+document.documentElement.style.setProperty('--bottomPageEdgeZinePadding', bottomPageEdgeZinePadding);
+document.documentElement.style.setProperty('--leftPageEdgeZinePadding', leftPageEdgeZinePadding);
+document.documentElement.style.setProperty('--rightPageEdgeZinePadding', rightPageEdgeZinePadding);
         
 
         const cmPerInch = 2.54;

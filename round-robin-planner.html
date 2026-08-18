@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Round Robin Planner</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        /* form */
+        .textInput,
+        select {
+            padding: 0.5rem;
+            display: block;
+            border: 1px solid black;
+        }
+        button {
+            border: 1px solid black;
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+        }
+        form {
+            margin: 1rem auto;
+            max-width: 40ch;
+            padding: 1rem;
+            border: 2px solid rgb(45, 152, 246);
+            background-color: azure;
+        }
+        p,
+        label {
+            display: block;
+            margin: 1rem 0;
+        }
+        label>span {
+            display: block;
+            padding-bottom: 0.2rem;
+        }
+    </style>
+</head>
+<body>
+    <form action="">
+        <label>
+            <span>Names and Numbers</span>
+            <textarea name="names-and-numbers"></textarea>
+        </label>
+        <button type="submit">Submit</button>
+    </form>
+    <div id="html"></div>
+    <script>
+        // a formData object to be used in the app
+        var formData = {};
+
+        // getting data in the form piece by piece
+        var urlObject = new URL(window.location.href);
+
+
+        urlObject.searchParams.forEach((value, name) => {
+            // save the info to the formData object
+            formData[name] = value;
+
+            // put data back into form
+            var input = document.querySelector(`[name="${name}"]`);
+            if (input) {
+                var inputType = input.type;
+                if (inputType == 'checkbox') {
+                    if (value == 'on') {
+
+                        input.checked = true;
+                    }
+                }
+                else if (inputType == 'radio') {
+                    document.querySelector('[name="' + name + '"][value="' + value + '"]').checked = true;
+                }
+                else {
+                    document.querySelector('[name="' + name + '"]').value = value;
+                }
+            }
+        });
+
+        
+    </script>
+</body>
+</html>

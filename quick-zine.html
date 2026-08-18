@@ -8,6 +8,41 @@
     <link rel="preload" href="static/OpenDyslexic-Regular.otf" as="font" crossorigin="anonymous" />
 
     <style>
+
+.grow-wrap {
+  /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+  display: grid;
+}
+.grow-wrap::after {
+  /* Note the weird space! Needed to preventy jumpy behavior */
+  content: attr(data-replicated-value) " ";
+
+  /* This is how textarea text behaves */
+  white-space: pre-wrap;
+
+  /* Hidden from view, clicks, and screen readers */
+  visibility: hidden;
+}
+.grow-wrap > textarea {
+  /* You could leave this, but after a user resizes, then it ruins the auto sizing */
+  resize: none;
+
+  /* Firefox shows scrollbar on growth, you can hide like this. */
+  overflow: hidden;
+}
+.grow-wrap > textarea,
+.grow-wrap::after {
+  /* Identical styling required!! */
+  border: 1px solid black;
+  padding: 0.5rem;
+  font: inherit;
+
+  /* Place on top of each other */
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+
+
         @font-face {
   font-family: 'Open-Dyslexic';
   src: url('static/OpenDyslexic-Regular.otf') format('opentype');
@@ -20,37 +55,59 @@
             padding: 0;
             border: 0;
         }
+        hr {
+            border-top: 1px solid rgba(0, 0, 0, 0.5);
+        }
         @media print {
             .noPrint {
                 display: none;
             }
         }
         /* form */
-        .textInput,
+        textarea,
+        input:not([type=checkbox]):not([type=radio]),
         select {
             padding: 0.5rem;
             display: block;
             border: 1px solid black;
         }
+        textarea {
+            margin-bottom: 1rem;
+        }
 
         button {
-            border: 1px solid black;
+            border: 2px solid rgba(0, 0, 0, 0.8);
             padding: 1rem;
             text-align: center;
             width: 100%;
-
+            background: white;
+        }
+        button:focus {
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.8);
         }
         .textWrap * {
             font-family: Arial, Helvetica, sans-serif;
             font-size: large;
             line-height: 1.5;
         }
-        .textWrap {
-            margin: 1rem auto;
+        .container, .containerItems > * {
             max-width: 40ch;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        .fullWidth {
+            max-width: none !important;
+        }
+        .textWrap {
+            /* margin: 1rem auto; */
+            
             padding: 1rem;
-            border: 2px solid rgb(45, 152, 246);
+            margin: 0 0 1rem;
             background-color: azure;
+            /* border: 2px solid rgb(45, 152, 246);
+            background-color: azure; */
             
         }
         p,
@@ -241,17 +298,48 @@
         #alert:empty {
             display: none;
         }
+        fieldset {
+            border: 5px solid rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            padding: 0  1rem;
+            margin: 0 0 1rem;
+        }
+        legend {
+            text-align: left;
+            margin: 0;
+            padding: 0 1rem;
+        }
+        /* fieldset {
+            padding: 1rem 0;
+
+        }
+        fieldset:nth-child(even) {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        fieldset:nth-child(odd) {
+            background: rgba(0, 0, 0, 0.2);
+        } */
+
     </style>
 </head>
 
 <body>
 
     <div class="noPrint textWrap">
-        <div id="alert"></div>
-        <h1>Quick Zine</h1>
-        <p>Turn text into a zine!</p>
-        <p><strong>This box will not be visible when you print.</strong></p>
+        <div class="containerItems">
+<div id="alert"></div>
+        <h1>Text to Zine</h1>   
+            <p>Fill out the form below and click submit to generate your zine.</p>
+            <p>All your form values will be saved in the URL. That means that you can bookmark your zine or share it with others!</p>    
+        </div>
+     
+        
         <form action="">
+            
+            <fieldset class="container">
+
+            <legend>Zine Settings</legend>
+            <p>If you're starting your zine, click here to autopopulate these </p>
             <label id="zinePagePaddingField">
                 <span>Inner Padding of each Page (cm)</span>
                 <input type="number" name="innerPagePadding" step="0.1" />
@@ -271,11 +359,15 @@
                 <input type="text" name="font" />
             </label>
             <p>"Text Font" can be any <a href="https://www.w3schools.com/cssref/css_websafe_fonts.php" target="_blank">browser supported font</a> or <code>'Open-Dyslexic'</code> (currently buggy - I'm working on it!)</p>
-            <label>
-                <span>Text</span>
-                <textarea name="text"></textarea>
-            </label>
-            <h2>Printer details</h2>
+            </fieldset>
+            <fieldset class="container">
+                <legend>Zine Text</legend>
+                <div class="grow-wrap">
+                <textarea onInput="this.parentNode.dataset.replicatedValue = this.value" name="text"></textarea>
+                </div>
+            </fieldset>
+            <fieldset class="container">
+            <legend>Printer details</legend>
             <p><a href="https://markjohnson4.github.io/grid.html?pages=1&rows=32&columns=25">Print a test grid</a> to see how your printer deals with full width/height content.</p>
             
             <label>
@@ -303,7 +395,10 @@
                 <span>Left Margin (cm)</span>
                 <input type="number" name="leftMarginCm" step="0.1" />
             </label>
-            <button type="submit">Submit</button>
+            </fieldset>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
         </form>
     </div>
     <div id="html"></div>

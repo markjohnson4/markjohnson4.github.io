@@ -5,6 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Round Robin Planner</title>
     <style>
+        /* autogrow textarea */
+        .grow-wrap {
+  /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+  display: grid;
+}
+.grow-wrap::after {
+  /* Note the weird space! Needed to preventy jumpy behavior */
+  content: attr(data-replicated-value) " ";
+
+  /* This is how textarea text behaves */
+  white-space: pre-wrap;
+
+  /* Hidden from view, clicks, and screen readers */
+  visibility: hidden;
+}
+.grow-wrap > textarea {
+  /* You could leave this, but after a user resizes, then it ruins the auto sizing */
+  resize: none;
+  width: 100%;
+
+  /* Firefox shows scrollbar on growth, you can hide like this. */
+  overflow: hidden;
+}
+.grow-wrap > textarea,
+.grow-wrap::after {
+  /* Identical styling required!! */
+  border: 1px solid black;
+  padding: 0.5rem;
+  font: inherit;
+
+  /* Place on top of each other */
+  grid-area: 1 / 1 / 2 / 2;
+}
+/* / autogrow textarea */
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -38,15 +73,29 @@
         }
         label>span {
             display: block;
-            padding-bottom: 0.2rem;
+            padding-bottom: 0.5rem;
+        }
+        label>span:first-child {
+            font-weight: bold;
+        }
+
+        textarea,
+        input:not([type=checkbox]):not([type=radio]),
+        select {
+            padding: 0.5rem;
+            display: block;
+            border: 1px solid black;
         }
     </style>
 </head>
 <body>
     <form action="">
         <label>
-            <span>Names and Numbers</span>
-            <textarea name="names-and-numbers"></textarea>
+            <span>People and their contact info</span>
+            <span>For each line write 1) one-word name, 2) email, and 3) phone number. Separate each of these with a space.</span>
+            <div class="grow-wrap">
+            <textarea  onInput="this.parentNode.dataset.replicatedValue = this.value" name="names-email-numbers"></textarea>
+            </div>
         </label>
         <button type="submit">Submit</button>
     </form>
@@ -80,6 +129,11 @@
                     document.querySelector('[name="' + name + '"]').value = value;
                 }
             }
+        });
+
+        // after everything from the URL is loaded into the form, trigger the "input" event for all textareas so that they autogrow (using the existing autogrow css/html)
+        document.querySelectorAll('textarea').forEach(elem => {
+            elem.dispatchEvent(new Event('input', { bubbles: true }));
         });
 
         

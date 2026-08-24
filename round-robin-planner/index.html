@@ -66,6 +66,9 @@
             border: 2px solid rgb(45, 152, 246);
             background-color: azure;
         }
+        form> *:first-child {
+            margin-top: 0 !important;
+        }
         p,
         label {
             display: block;
@@ -89,54 +92,27 @@
     </style>
 </head>
 <body>
+    <h1 style="text-align: center">Round Robin Planner</h1>
     <form action="">
+        <!-- <label>
+            <span>Start Date/Time</span>
+            <input type="datetime" name="start">
+        </label>
         <label>
-            <span>People and their contact info</span>
-            <span>For each line write 1) one-word name, 2) email, and 3) phone number. Separate each of these with a space.</span>
+            <span>Total Minutes of Event</span>
+            <input type="number" name="minutes">
+        </label> -->
+        <label>
+            <span>People (each on their own line)</span>
+            <!-- <span>People and their contact info</span>
+            <span>For each line write 1) one-word name, 2) email, and 3) phone number. Separate each of these with a space.</span> -->
             <div class="grow-wrap">
-            <textarea  onInput="this.parentNode.dataset.replicatedValue = this.value" name="names-email-numbers"></textarea>
+            <textarea name="peopleData" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
             </div>
         </label>
         <button type="submit">Submit</button>
     </form>
-    <div id="html"></div>
-    <script>
-        // a formData object to be used in the app
-        var formData = {};
-
-        // getting data in the form piece by piece
-        var urlObject = new URL(window.location.href);
-
-
-        urlObject.searchParams.forEach((value, name) => {
-            // save the info to the formData object
-            formData[name] = value;
-
-            // put data back into form
-            var input = document.querySelector(`[name="${name}"]`);
-            if (input) {
-                var inputType = input.type;
-                if (inputType == 'checkbox') {
-                    if (value == 'on') {
-
-                        input.checked = true;
-                    }
-                }
-                else if (inputType == 'radio') {
-                    document.querySelector('[name="' + name + '"][value="' + value + '"]').checked = true;
-                }
-                else {
-                    document.querySelector('[name="' + name + '"]').value = value;
-                }
-            }
-        });
-
-        // after everything from the URL is loaded into the form, trigger the "input" event for all textareas so that they autogrow (using the existing autogrow css/html)
-        document.querySelectorAll('textarea').forEach(elem => {
-            elem.dispatchEvent(new Event('input', { bubbles: true }));
-        });
-
-        
-    </script>
+    <div id="htmlWrap"></div>
+    <script src="main.js"></script>
 </body>
 </html>

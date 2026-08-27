@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8">
+<!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=ai-legible&utm_source=comment&utm_medium=referral&utm_id=b88e9cda-c7ed-491f-a9f6-7231e2d8c468
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+<meta name="hosting-provider" content="Netlify">
+<meta name="netlify-deploy" content="https://netlify.new/?utm_campaign=ai-legible&amp;utm_source=meta&amp;utm_medium=referral&amp;utm_id=b88e9cda-c7ed-491f-a9f6-7231e2d8c468">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Song to Colors</title>
+    <meta name="description" content="">
+
+
+<meta property="og:title" content="Song to Colors" />
+<meta property="og:description" content="view new example" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://freewebtools.netlify.app/song-to-colors/" />
+
+<style>
+    :root {
+        --vertical_gap_big: 1em;
+--background_color: #fafafa;
+--action_color: #1b6ea5;
+--accent_color: #640143;
+--text_color: #202020;
+--font_family: ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+--ffod: openDyslexic;
+        --alt_background_color: var(--accent_color);
+--alt_action_color: #d6efff;
+--alt_accent_color: #ffddfe;
+--alt_text_color: #fff;
+--alt_border_color: var(--accent_color);
+--default_font_size: 1.5rem;
+--default_line_height:1.6; 
+--header_font_family: var(--font_family);
+        --section_y_padding: 1rem;
+--section_y_padding_mobile: 2rem;
+--odd_numbered_sections_background_color: #eee;
+--navLinks_size: 2rem;
+--home_navLink_size: 3rem;
+--leadText_size: 2.5rem;
+--container_width: 768px;
+--container_x_padding: 1rem;
+--aside_label_display: block;
+--aside_left_margin: 3rem;
+        --h1_size: 4rem;
+--h2_size: 3.5rem;
+--h3_size: 3rem;
+--h4_size: 2.5rem;
+--h5_size: 2rem;
+--h6_size: 1.5rem;
+--header_size_mobile_reduction: 1.5;
+--h1_weight: 400;
+--h2_weight: 700;
+--h3_weight: 400;
+--h4_weight: 700;
+--h5_weight: 400;
+--h6_weight: 700;
+--h1_line_height: 1.1;
+--h2_line_height: 1.2;
+--h3_line_height: 1.3;
+--h4_line_height: 1.4;
+--h5_line_height: 1.5;
+--h6_line_height: 1.6;
+    }
+    .hideForm main.py-section {
+        padding-bottom: 0;
+    }
+    .hideForm .formRelated {
+        display: none !important;
+    }
+    .hideForm {
+        background-color: black;
+    }
+    .hideForm h1 {
+        color: #650244;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .hideForm h1:last-child {
+        display: none;
+    }
+</style>    
+
+
+
+<style type="text/css">@charset "UTF-8";body{margin:0}*,*::before,*::after{box-sizing:border-box;margin:0}textarea{resize:vertical}table{border-collapse:collapse}img,video,canvas,audio,iframe,embed,object{display:block}img,video{max-width:100%;height:auto}blockquote,dl,dd,h1,h2,h3,h4,h5,h6,hr,figure,p,pre{margin:0}html{scroll-behavior:smooth}button{appearance:none;border:0;padding:0;margin:0;background:0 0}*:focus{outline-style:dashed;outline-width:2px;outline-offset:2px}.textInput,select,textarea{width:100%;max-width:100%;appearance:none}input,select{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}.sr-only:first-child+*{margin-top:0}body{font-size:var(--default_font_size);line-height:var(--default_line_height);font-family:var(--font_family);color:var(--text_color);background-color:var(--background_color)}h1,h2,h3,h4,h5,h6{color:var(--accent_color)}blockquote{border-left-color:var(--accent_color)}.minisection,aside{border-color:var(--accent_color)}aside:before{color:var(--accent_color)}.c-accent{color:var(--accent_color)}.bg-accent{background-color:var(--accent_color);color:var(--background_color)}a,.link{color:var(--action_color)}a:hover,a:focus,.link:hover,.link:focus{background-color:var(--action_color);color:var(--background_color)}.btn-primary{color:var(--background_color);background-color:var(--action_color);border-color:var(--action_color)}.btn-primary:hover,.btn-primary:focus{background-color:var(--text_color);color:var(--background_color)}*:focus{outline-color:var(--action_color)}h1,h2,h3,h4,h5,h6{font-family:var(--header_font_family)}.bg-alt{border-color:var(--alt_border_color);color:var(--alt_text_color);background-color:var(--alt_background_color)}.bg-alt h1,.bg-alt h2,.bg-alt h3,.bg-alt h4,.bg-alt h5,.bg-alt h6{color:var(--alt_accent_color)}.bg-alt blockquote{border-left-color:var(--alt_accent_color)}.bg-alt .minisection,.bg-alt aside{border-color:var(--alt_accent_color)}.bg-alt aside:before{color:var(--alt_accent_color)}.bg-alt .c-accent{color:var(--alt_accent_color)}.bg-alt .bg-accent{background-color:var(--alt_accent_color);color:var(--alt_background_color)}.bg-alt a,.bg-alt .link{color:var(--alt_action_color)}.bg-alt a:hover,.bg-alt a:focus,.bg-alt .link:hover,.bg-alt .link:focus{background-color:var(--alt_action_color);color:var(--alt_background_color)}.bg-alt .btn-primary{color:var(--alt_background_color);background-color:var(--alt_action_color);border-color:var(--alt_action_color)}.bg-alt .btn-primary:hover,.bg-alt .btn-primary:focus{background-color:var(--alt_text_color);color:var(--alt_background_color)}.bg-alt *:focus{outline-color:var(--alt_action_color)}h1{font-weight:var(--h1_weight);line-height:var(--h1_line_height);font-size:calc(var(--h1_size)/var(--header_size_mobile_reduction))}@media(min-width:768px){h1{font-size:var(--h1_size)}}h2{font-weight:var(--h2_weight);line-height:var(--h2_line_height);font-size:calc(var(--h2_size)/var(--header_size_mobile_reduction))}@media(min-width:768px){h2{font-size:var(--h2_size)}}h3{font-weight:var(--h3_weight);line-height:var(--h3_line_height);font-size:calc(var(--h3_size)/var(--header_size_mobile_reduction))}@media(min-width:768px){h3{font-size:var(--h3_size)}}h4{font-weight:var(--h4_weight);line-height:var(--h4_line_height);font-size:calc(var(--h4_size)/var(--header_size_mobile_reduction))}@media(min-width:768px){h4{font-size:var(--h4_size)}}h5{font-weight:var(--h5_weight);line-height:var(--h5_line_height);font-size:calc(var(--h5_size)/var(--header_size_mobile_reduction))}@media(min-width:768px){h5{font-size:var(--h5_size)}}h6{font-weight:var(--h6_weight);line-height:var(--h6_line_height);font-size:calc(var(--h6_size)/var(--header_size_mobile_reduction))}@media(min-width:768px){h6{font-size:var(--h6_size)}}.size-navLink{font-size:var(--navLinks_size)}.size-homeLink{font-size:var(--home_navLink_size)}.lead{text-align:var(--leadText_align);font-size:calc(var(--leadText_size)/var(--header_size_mobile_reduction))}@media(min-width:768px){.lead{font-size:var(--leadText_size)}}picture{display:block}p:empty{display:none}.container>*:first-child{margin-top:0}li{margin-top:var(--vertical_gap_small)}li ul{margin-top:var(--vertical_gap_small)}.row>*{margin-top:0}*:not(hr):empty{margin-top:0}img{margin:0 auto}figure{text-align:center}h1:first-child,aside>*:first-child{margin-top:0}input,textarea{font-size:1rem}.lh-1{line-height:1}.size-reduce{font-size:.8em}h1{text-align:left}hr{margin:2rem 0}.text-center{text-align:center}.text-right{text-align:right}.decoration-none{text-decoration:none}.list-reset{margin:0;padding:0;list-style:none}pre,code{background:#e2e2e2}pre{margin-top:2rem;max-width:100%;overflow:auto;padding:5px}code{padding:.25em}blockquote{padding-left:1rem;border-left-width:5px;border-left-style:solid}.hideIfFirst:first-child{display:none}.active{text-decoration:none;pointer-events:none;color:inherit}.active a{color:inherit;text-decoration:none}td>*:first-child{margin-top:0}details{background:#dedede}details[open]::details-content{padding:1rem}.pb-xs{padding-bottom:.5rem}.p-xs{padding:.5rem}.p-sm{padding:1rem}.px-xs{padding-left:.5rem;padding-right:.5rem}.px-sm{padding-left:1rem;padding-right:1rem}.pr-sm{padding-right:1rem}.pl-sm{padding-left:1rem}.pl-xs{padding-left:.5rem}.pl-md{padding-left:2rem}.py-section{padding-top:var(--section_y_padding_mobile);padding-bottom:var(--section_y_padding_mobile)}@media(min-width:768px){.py-section{padding-top:var(--section_y_padding);padding-bottom:var(--section_y_padding)}}.mx-auto{margin-right:auto;margin-left:auto}.mt-0{margin-top:0}.mt-sm{margin-top:1rem}.mb-sm{margin-bottom:1rem}.mb-md{margin-bottom:2rem}.mt-lg{margin-top:3rem}.mt-xl{margin-top:3rem}@media(min-width:768px){.mt-xl{margin-top:5rem}}.ml-0{margin-left:0}.container{width:var(--container_width);max-width:100%;margin:0 auto;padding-left:var(--container_x_padding);padding-right:var(--container_x_padding)}body{overflow-x:hidden}.containerOverride{width:100vw;margin-left:50%;transform:translateX(-50%)}@media(pointer:fine){.containerOverride{width:calc(100vw - 12px)}}.flex{display:flex}.flex-wrap{flex-wrap:wrap}.flex-1{flex:1}.direction-column{flex-direction:column}.align-start{align-items:flex-start}.align-center{align-items:center}.align-end{align-items:flex-end}.justify-start{justify-content:flex-start}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-end{justify-content:flex-end}@media screen and (max-width:var(--sm)){.row-reverse-sm{flex-direction:row-reverse}}.btn,.textInput,select{border-width:2px;border-style:solid;padding:.5rem 1rem;border-radius:.5rem;line-height:1.2;font-size:1em}.btn{display:inline-block;text-decoration:none}.textInput,select{width:100%;display:block}.mobileMenuIcon{position:relative;display:block;margin:0 auto;height:1em;width:1.2em}.mobileMenuIcon span{display:block;position:absolute;left:0;right:0;height:.12em;background-color:currentColor}.mobileMenuIcon span:first-child{top:.08em}.mobileMenuIcon span:nth-child(2){top:50%;transform:translateY(-50%)}.mobileMenuIcon span:last-child{bottom:.08em}body.is-active .mobileMenuIcon span:first-child{top:50%;transform:translateY(-50%)rotate(45deg)}body.is-active .mobileMenuIcon span:nth-child(2){background-color:transparent}body.is-active .mobileMenuIcon span:last-child{top:50%;transform:translateY(-50%)rotate(-45deg)}.block{display:block}.none{display:none}.inline{display:inline}.inline-flex{display:inline-flex}.width-iconNavLink{width:2.5em}svg{width:1em;fill:currentColor;stroke:currentColor}.full-width svg{width:100%}.mh-100vh{min-height:100vh}.grid{display:grid}.grid>*{margin-top:0}.grid-row{grid-row:1}.gap-md{gap:2rem}.gap-sm{gap:1rem}.gap-xs{gap:.5rem}.grid-cols-flex{grid-template-columns:repeat(auto-fill,minmax(288px,1fr))}@media(min-width:768px){.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}.grid-cols-2-xs{grid-template-columns:repeat(2,minmax(0,1fr))}@media screen and (max-width:767px){.xs-grid-stack{grid-template-columns:minmax(calc(100vw - 2rem),767px)!important}}section{padding:var(--section_y_padding_mobile)0}@media(min-width:768px){section{padding:var(--section_y_padding)0}}section:nth-of-type(odd){background:var(--odd_numbered_sections_background_color)}section:first-of-type{margin-top:var(--section_y_padding_mobile)}@media(min-width:768px){section:first-of-type{margin-top:var(--section_y_padding)}}.b-solid{border-style:solid}.b-heavy-bottom{border-width:0 0 3px}.b-heavy-top{border-width:3px 0 0}.b-bottom-current{border-bottom:1px solid}.b-left-current{border-left:1px solid}.b-big-svg svg{stroke-width:2px}.stroke-0 svg{stroke-width:0}.b-color-siteHeader{border-color:var(--alt_background_color)}body.is-active .b-color-siteHeader{border-color:var(--alt_action_color)}.hide{display:none!important}.rows{display:flex;flex-direction:column}.gap-sm{gap:1rem}.pad-y-lg{padding:1.5rem 0}.field{display:block;margin:1.5rem 0}.field:last-child{margin-bottom:0}.field-label{display:block;padding:0 0 .5rem}.textInput{display:block;width:100%;font-size:inherit}.btn{font-size:inherit;border:2px solid;border-radius:5px;padding:.5rem 1rem;background:#fff;cursor:pointer}.cols{display:flex}.space-between{justify-content:space-between}.pad-y-md{padding-top:1rem;padding-bottom:1rem}fieldset{padding:1rem;border:1px solid #000;background:#fffefe}.fieldsets .editMode-hide{display:none}.fieldsets[data-reorder-fieldsets=true] .reorderMode-hide{display:none}.fieldsets[data-reorder-fieldsets=true] .editMode-hide{display:inherit}.fieldsets[data-reorder-fieldsets=true] .fieldsetRow{padding:5px 0;margin-right:120px}.fieldsets[data-reorder-fieldsets=true] fieldset{padding:5px 0}.fieldsetRow{position:relative;will-change:transform}.fieldsets[data-reorder-fieldsets=true] .fieldsetRow .textInput{background:0 0;border:none}.fieldsets[data-reorder-fieldsets=true] .fieldsetRow[data-draggable=true] fieldset,.btn-reorder{background-color:azure;border-color:blue}.fieldsetRow[data-draggable=true]{z-index:10}.fieldsets[data-reorder-fieldsets=true] .fieldsetRow:before{content:'';position:absolute;top:0;left:0;display:block;width:100%;height:100%}.fieldsets[data-reorder-fieldsets=true] .field.reorderMode-show{margin:0}.fieldsets[data-reorder-fieldsets=true] .field.reorderMode-show .field-label{display:none}.fieldsets[data-reorder-fieldsets=true] .textInput{border-radius:0;background:0 0;background-color:#e1f6f7}.fieldsets[data-reorder-fieldsets=true] .fieldsetRows .btn{display:none}.fieldsets[data-reorder-fieldsets=true] .fieldsetRows .pad-y-lg{padding:0}.fieldsets[data-reorder-fieldsets=true] .fieldsetBonus{position:absolute;white-space:nowrap;top:5px;left:100%}.btn-addNew{color:#026602}.btn-remove{color:#9d1a1a}.btn-clearForm{background-color:#9d1a1a;color:#fff;border-color:#000}.modal{display:none}.modal.is-active{display:block}.openable{display:none}.openable.is-open{display:block}.toggleRotate{display:inline-block}.is-open .toggleRotate{transform:rotate(90deg)}body.is-active .nav,body.is-active main,body.is-active footer{display:none}.minisection,aside{border-style:solid;border-width:5px;padding:1rem}aside{position:relative;margin-top:3rem;border-radius:10px;padding-top:4rem}aside.no-label{padding-top:1rem}aside.no-label:before{display:none}aside:before{content:"Aside";position:absolute;top:0;left:0;border:5px solid;border-top-width:0;border-left-width:0;padding:0 .5rem;border-radius:0 0 10px 0;display:var(--aside_label_display);font-weight:700}@media(min-width:768px){aside{margin-left:var(--aside_left_margin)}}audio{display:block;width:100%}.add-bullet:before{content:"• ";padding-right:.5em}.iframeWrapper{position:relative}.iframeWrapper>*{position:absolute;top:0;left:0;width:100%;height:100%}.stickyNav{position:sticky;top:0;background:#000;color:#fff;margin:0 -1rem}.stickyNav a{color:inherit;text-decoration:none}.stickyNav ul{list-style-type:none;padding:0 1rem;display:flex;gap:1rem;position:relative}.stickyNav ul ul{position:absolute;background:#000;top:100%;left:0;right:0;border-top:2px solid pink}.stickyNav .withSub{border-bottom:2px solid pink;outline:#000}.stickyHeader{background-color:#000;position:sticky;top:0;z-index:10}.navLink{color:#fff;padding:.2rem .5rem;display:block;background-color:rgba(0,0,0,.8);font-size:1.5rem;line-height:1.5;cursor:pointer}.rainbowBtn{background-image:linear-gradient(to right,red,orange,#b4b400,green,blue,indigo,violet);text-shadow:0 0 4px #000;text-decoration:none}th{text-align:left;vertical-align:top}tr>*{padding-left:2rem}tr>*:first-child{padding-left:0}tbody tr>*{border-top:1px solid rgba(0,0,0,.4)}[data-status=hide]{display:none}h1{font-size:3rem;font-weight:700}h2{font-size:2.25rem}h3{font-size:1.5rem;font-weight:700}h1,h2,h3{margin-top:1.5em}h1:first-child,h2:first-child,h3:first-child{margin-top:0}p,ul{margin-top:1em}dialog:-internal-dialog-in-top-layer{max-width:none;max-height:none;width:100%;height:100%}dialog{overscroll-behavior:contain;position:fixed;width:100vw;height:100vh;top:0;left:0;margin:0;padding:0;border:none;overflow:auto;max-width:none}.sticky{position:sticky;top:0;width:100%}.bg-white{background-color:#fff}[disabled]{opacity:.5;pointer-events:none}textarea{resize:none}*{box-sizing:border-box}body.touch [data-reorder-fieldsets=true]{margin-right:2rem}.p-md{padding:1rem}.pt-0{padding-top:0}.text{max-width:65ch}.nowrap{white-space:nowrap}.c-white{color:#fff}:root{--time:purple;--timeLight:#f2ecf2}.bg-time{background-color:var(--time)}.bc-time{border-color:var(--time)}.scheduledFieldset fieldset{background:var(--timeLight);border-color:var(--time)}.fieldsets[data-reorder-fieldsets=true] .scheduledFieldset fieldset{background:var(--timeLight);border-color:var(--time)}.px-xs{padding-right:.5rem;padding-left:.5rem}dl:after{content:'';display:table;clear:both}dt{font-weight:700;clear:left;padding-right:2rem}dd,dt{float:left}</style>
+<style>
+    @font-face {
+  font-family: openDyslexic;
+  src: url(/fonts/OpenDyslexic-Regular.woff2);
+}
+
+
+</style></head>
+<body id="top" class="page songToColors bg-light flex direction-column mh-100vh"><main class="py-section flex-1 prose">
+            <div class="container">
+<div class="row flex align-start justify-between">
+    <h1 id="formTitle"></h1><h1 >Song to Colors</h1></div><style>
+    #form {
+        overflow: hidden;
+    }
+    #pulseBox {
+        height: 120vh;
+    }
+    button {
+        width: 100%;
+        border-radius: 5px;
+        border: 2px solid #1139ff;
+        padding: 5px;
+        font-size: 1rem;
+    }
+    .b-red {
+        border-color: red;
+    }
+    h2 {
+        margin-top: 3rem;
+         
+    }
+    h2 + table {
+        margin-top: 0;
+    }
+    table {
+         
+        width: 100%;
+    }
+    table input {
+        width: 100%;
+    }
+    tr > * + * {
+        padding-left: 1rem;
+    }
+    tr + tr > * {
+        padding-top: 1rem;
+    }
+    #formTitle {
+        font-weight: bold;
+    }
+</style><div id="audioPlayer"></div>
+<form class="block" data-putformdatainurl>
+    <div class="flex justify-end">
+        <span>Show form?</span><span class="pl-sm"></span><label><span>Yes</span><span class="pl-xs"></span><input
+                type="radio" name="sf" value="y" checked></label><span class="pl-sm"></span><label><span>No</span><span
+                class="pl-xs"></span><input type="radio" name="sf" value="n">
+    </div>
+    <div id="form">
+        <label class="block">
+            <span class="block">Song Title</span>
+            <input type="text" name="ft" />
+        </label>
+        <label class="block">
+            <span class="block">MP3 URL</span>
+            <input type="text" name="a" />
+        </label>
+        <label class="block">
+            <span class="block">BPM</span>
+            <input type="text" name="b" />
+        </label>
+        <label class="block">
+            <span class="block">Pulse transition duration (milliseconds)</span>
+            <input type="number" name="ptd" />
+        </label>
+        
+        <label class="block">
+            <span class="block">Pulse Transition Timing Function</span>
+            <input type="text" name="ptt" />
+        </label>
+        <label class="block">
+            <span class="block">Color check frequency (milliseconds)</span>
+            <input type="number" name="ccf" />
+        </label>
+        
+        
+        <label class="block">
+            <span class="block">Color Picker</span>
+            <input name="j" data-jscolor="">
+        </label>
+        <br>
+        <div>
+            Display Color Vars Helper Tool?
+        </div>
+        <label for="displayVarsHelpers-yes">
+            Yes
+
+        </label>
+        <input id="displayVarsHelpers-yes" type="radio" name="dcvh" value="y" />
+        <label class="" for="displayVarsHelpers-no">
+            <span class="">No</span>
+
+        </label>
+        <style>
+            #displayVarsHelpers-no:checked~.varhelper {
+                display: none;
+            }
+        </style>
+        <input id="displayVarsHelpers-no" type="radio" name="dcvh" value="n" checked="true" />
+
+        <div id="varhelperToolWrap" class="varhelper">
+            <label class="block">
+                <span class="block">Color Name</span>
+                <input type="text" name="cvhn">
+            </label>
+            <label class="block">
+                <span class="block">Color Hex</span>
+                <input name="cvhh" data-jscolor="">
+            </label>
+            <div>
+                <span id="colorHexText"></span><span></span>
+            </div>
+            <button onclick="appendElementToElement('colorHexText', 'colorVars')" type="button">Append color name and
+                hex to list of Color Vars</button>
+        </div>
+        <label class="block">
+            <span class="block">Color Vars</span>
+            <textarea id="colorVars" name="c"></textarea>
+        </label>
+        <div>
+            Display Helper Tool?
+        </div>
+        <label for="displayHelper-yes">
+            Yes
+
+        </label>
+        <input id="displayHelper-yes" type="radio" name="dh" value="y" />
+        <label class="" for="displayHelper-no">
+            <span class="">No</span>
+
+        </label>
+        <style>
+            #displayHelper-no:checked~.helper {
+                display: none;
+            }
+        </style>
+        <input id="displayHelper-no" type="radio" name="dh" value="n" checked="true" />
+
+        <div id="helperToolWrap" class="helper">
+
+            <div id="helperGridInputs"></div>
+        </div>
+        <label class="block">
+            <span class="block">Color Details</span>
+            <details>
+                <summary>Formating instructions</summary>
+                <ul>
+                    <li>each line represents one or more 4/4 bars of the song</li>
+                    <li>each line must end with "x" and a number representing the number of bars the preceeding text
+                        should repeat for</li>
+                    <li>The preceeding text should have the format [color hex] [sixteenth note label] where [sixteenth
+                        note label] has the format [quarter note number][optional "e", "n", or "a"], which represent the
+                        2nd 3rd and 4th sixteenth beats respectively in a quarter.</li>
+                </ul>
+            </details>
+            <textarea name="t"></textarea>
+        </label>
+    </div>
+
+</form>
+<div id="html"></div>
+<br>
+    <div class="containerOverride" style="background-color: #000;" id="bgBox">
+        <div id="pulseBox" style="background-color: transparent;"></div>
+    </div><p class="formRelated"><a href="?sf=y&amp;ft=Washing&#43;a&#43;Dish&amp;a=https%3A%2F%2Fres.cloudinary.com%2Fdcgyofnia%2Fvideo%2Fupload%2Fv1722815474%2Fsongs%2FWashing_a_Dish_sotchg.m4a&amp;b=90&amp;ptd=200&amp;ptt=ease-in-out&amp;ccf=2&amp;j=%23711B6D&amp;dcvh=n&amp;cvhn=bffgg&amp;cvhh=%236F1A91&amp;c=--dark%3A%23000%0A--pulse%3A%23030671%0A--singing%3A%236F1A91%0A%0A%0A&amp;dh=y&amp;t=1&#43;var%28--dark%29&#43;x2%0A1&#43;var%28--dark%29%2C&#43;3&#43;var%28--singing%29%2C&#43;4n&#43;var%28--dark%29&#43;%2F&#43;1&#43;var%28--pulse%29%2C&#43;2&#43;var%28--pulse%29&#43;x32">view new example</a></p>
+<!-- [view example](?a=https%3A%2F%2Fres.cloudinary.com%2Fdcgyofnia%2Fvideo%2Fupload%2Fv1722815474%2Fsongs%2FWashing_a_Dish_sotchg.m4a&b=90&c=%23000000&j=%234CC5A3&t=%237C7C7C+1+x1%0A%234D1DFF+1+%2329A7FF+2+%234D1DFF+3+%2329A7FF+4+x1%0A%23030C65+1+%230614AA+2+%23041AB7+3+%23051DD0+4+x2%0A%2375037C+1+%23A104AA+2+%23B905C3+3+%23D905E4+4+x2%0A%23744F00+1+%23956500+2+%23C38500+3+%23D08D00+4+x2%0A%230C6200+1+%23139D00+2+%2317BE00+3+%231ADA00+4+x2%0A%23030C65+1+%230614AA+2+%23041AB7+3+%23051DD0+4+x2%0A%2375037C+1+%23A104AA+2+%23B905C3+3+%23D905E4+4+x2%0A%23744F00+1+%23956500+2+%23C38500+3+%23D08D00+4+x2%0A%230C6200+1+%23139D00+2+%2317BE00+3+%231ADA00+4+x1%0A%2375037C+1n+%23A104AA+1a+%23B905C3+2+%2375037C+2n+%23A104AA+2a+%231BBBC3+3+%23D5D722+3n+%23B4B61C+4+%23828314+4n+x1%0A%23030C65+1+%230614AA+2+%23041AB7+3+%23051DD0+4+x2%0A%2375037C+1+%23A104AA+2+%23B905C3+3+%23D905E4+4+x2%0A%23744F00+1+%23956500+2+%23C38500+3+%23D08D00+4+x2%0A%230C6200+1+%23139D00+2+%2317BE00+3+%231ADA00+4+x2%0A%23030C65+1+%230614AA+2+%23041AB7+3+%23051DD0+4+x2%0A%2375037C+1+%23A104AA+2+%23B905C3+3+%23D905E4+4+x2%0A%23744F00+1+%23956500+2+%23C38500+3+%23D08D00+4+x2%0A%230C6200+1+%23139D00+2+%2317BE00+3+%231ADA00+4+x2) -->
+<!-- 
+[view example](?a=https%3A%2F%2Fres.cloudinary.com%2Fdcgyofnia%2Fvideo%2Fupload%2Fv1722815474%2Fsongs%2FWashing_a_Dish_sotchg.m4a&b=90&c=%23000000&d=200&f=10&j=%234CC5A3&t=%237C7C7C+1+x1%0A%234D1DFF+1+%2329A7FF+2+%234D1DFF+3+%2329A7FF+4+x1%0A%23030C65+1+%230614AA+2+%23041AB7+3+%23051DD0+4+x2%0A%2375037C+1+%23A104AA+2+%23B905C3+3+%23D905E4+4+x2%0A%23744F00+1+%23956500+2+%23C38500+3+%23D08D00+4+x2%0A%230C6200+1+%23139D00+2+%2317BE00+3+%231ADA00+4+x2%0A%23030C65+1+%230614AA+2+%23041AB7+3+%23051DD0+4+x2%0A%2375037C+1+%23A104AA+2+%23B905C3+3+%23D905E4+4+x2%0A%23744F00+1+%23956500+2+%23C38500+3+%23D08D00+4+x2%0A%230C6200+1+%23139D00+2+%2317BE00+3+%231ADA00+4+x1%0A%2375037C+1n+%23A104AA+1a+%23B905C3+2+%2375037C+2n+%23A104AA+2a+%231BBBC3+3+%23D5D722+3n+%23B4B61C+4+%23828314+4n+x1%0A%23030C65+1+%230614AA+2+%23041AB7+3+%23051DD0+4+x2%0A%2375037C+1+%23A104AA+2+%23B905C3+3+%23D905E4+4+x2%0A%23744F00+1+%23956500+2+%23C38500+3+%23D08D00+4+x2%0A%230C6200+1+%23139D00+2+%2317BE00+3+%231ADA00+4+x2%0A%23030C65+1+%230614AA+2+%23041AB7+3+%23051DD0+4+x2%0A%2375037C+1+%23A104AA+2+%23B905C3+3+%23D905E4+4+x2%0A%23744F00+1+%23956500+2+%23C38500+3+%23D08D00+4+x2%0A%230C6200+1+%23139D00+2+%2317BE00+3+%231ADA00+4+x2) --><script type="text/javascript">
+var htmlWrapper = document.getElementById('html');
+var insertHtml = function(thehtml) {
+    htmlWrapper.innerHTML = thehtml;
+}
+</script><script type="text/javascript">
+const copyTextElement = document.getElementById('copyURLAlert');
+var copyURL = function() {
+    let url = document.location.href
+
+    navigator.clipboard.writeText(url).then(function() {
+        copyTextElement.innerHTML = 'Copied!';
+    }, function() {
+        copyTextElement.innerHTML = 'Error';
+    });
+    setTimeout(function(){copyTextElement.innerHTML = '';}, 1000);
+}
+</script><script type="text/javascript">
+    
+    const debounce = (mainFunction, delay) => {
+  
+  let timer;
+
+  
+  return function (...args) {
+    
+    clearTimeout(timer);
+
+    
+    timer = setTimeout(() => {
+      mainFunction(...args);
+    }, delay);
+  };
+};
+</script><script type="text/javascript">
+    const urlBase = window.location.protocol + "//" + window.location.host + window.location.pathname + "?";
+    
+    var theURLParams;
+    var updateFormFromURL = function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        urlParams.forEach((value, key) => {
+            var input = document.querySelector('[name="' + key + '"]');
+            if (input) {
+                var inputType = input.type;
+                if (inputType == 'checkbox') {
+                    if (value == 'on') {
+
+                        input.checked = true;
+                    }
+                }
+                else if (inputType == 'radio') {
+                    document.querySelector('[name="' + key + '"][value="' + value + '"]').checked = true;
+                }
+                else {
+                    document.querySelector('[name="' + key + '"]').value = value;
+                }
+            }
+        });
+        theURLParams = urlParams;
+        window.dispatchEvent(formDataStringUpdated);
+
+    }
+
+    const formDataStringUpdated = new Event("formDataStringUpdated");
+    var formDataString;
+    var formDataToURL = function (form) {
+        var formData = new URLSearchParams(new FormData(form));
+        return formData.toString();
+    }
+    var updateURLFromForm = function (event) {
+        var formData = new URLSearchParams(new FormData(mainForm));
+        formDataString = formData.toString();
+        theURLParams = formData;
+        window.history.replaceState({}, '', urlBase + formDataString);
+        window.dispatchEvent(formDataStringUpdated);
+    }
+    window.addEventListener("formDataStringUpdated", function () {
+        console.log('window.formDataStringUpdated event triggered');
+    });
+
+
+    const mainForm = document.querySelector('[data-putformdatainurl]');
+    
+    updateFormFromURL();
+    const debouncedupdateURLFromForm = debounce(updateURLFromForm, 500);
+
+    if (mainForm && mainForm.length != 0) {
+        mainForm.addEventListener("keyup", debouncedupdateURLFromForm, false);
+        mainForm.addEventListener("change", debouncedupdateURLFromForm, false);
+    }
+    else {
+        console.log('no forms have the attribute data-putformdatainurl')
+    }
+
+
+</script><script>
+    
+    var totalBars = 0;
+    var bgBox = document.getElementById('bgBox');
+    var pulseBox = document.getElementById('pulseBox');
+    var sixteenthArray = ['1', '1e', '1n', '1a', '2', '2e', '2n', '2a', '3', '3e', '3n', '3a', '4', '4e', '4n', '4a'];
+
+    var html = '', audioURL, bpm, defaultColor, colorDetails, audioEvents, pulseTransitionDuration, pulseHoldDuration;
+    theURLParams.forEach((value, key) => {
+        if (key == 'ft') {
+            formTitle = value;
+        }
+        if (key == 'sf') {
+            showForm = value;
+        }
+        if (key == 'a') {
+            audioURL = value;
+        }
+        if (key == 'b') {
+            bpm = value;
+        }
+        if (key == 'c') {
+            defaultColor = value;
+        }
+        if (key == 'ccf') {
+            colorCheckFrequency = value;
+        }
+        if (key == 't') {
+            colorDetails = value;
+        }
+        if (key == 'ptd') {
+            pulseTransitionDuration = value;
+        }
+        if (key == 'phd') {
+            pulseHoldDuration = value;
+        }
+        if (key == 'ptt') {
+            pulseTransitionTimingFunction = value;
+        }
+
+    });
+    const form = document.getElementById('form');
+    if (showForm == 'n') {
+        form.style.height = '0px';
+        document.body.className += ' hideForm';
+    }
+    else {
+        form.style.height = 'auto';
+        document.body.classList.remove('hideForm');
+    }
+
+    const milisecondsPerSixteenth = 60000 / bpm / 4;
+    var milisecondsPerBar = milisecondsPerSixteenth * 16;
+
+
+
+    console.log('milisecondsPerSixteenth: ' + milisecondsPerSixteenth);
+    console.log('milisecondsPerBar: ' + milisecondsPerBar);
+    console.log('milisecondsPerQuarter: ' + milisecondsPerBar / 4);
+
+
+
+
+    var getMillisecondsStart = function (sixteenthArrayIndex, elapsedBars, pulseState = false) {
+
+        var start = elapsedBars * milisecondsPerBar;
+        start += sixteenthArrayIndex * milisecondsPerSixteenth;
+        if (pulseState == 'on') {
+            start -= pulseTransitionDuration;
+        }
+        return Math.round(start);
+    }
+
+    function orderStartTimes(a, b) {
+        return a.start - b.start;
+    }
+
+    var generateColorEvents = function (colorDetailsString, status = false) {
+        var eventsArray = [];
+        var elapsedBars = 0;
+        const lines = colorDetailsString.trim().split(/\n/);
+
+
+        for (let index = 0; index < lines.length; index++) {
+            const line = lines[index];
+
+
+            const lastSpaceIndex = line.lastIndexOf(" ");
+            const textBeforeLastSpace = line.substring(0, lastSpaceIndex + 1);
+            const textAtLastSpace = line.substring(lastSpaceIndex + 1);
+            const bars = Number(textAtLastSpace.replace('x', ''));
+            const eventChunks = textBeforeLastSpace.split(' / ');
+
+            for (let c = 0; c < eventChunks.length; c++) {
+                const chunk = eventChunks[c];
+
+                var type;
+                if (c == 0) {
+                    type = 'bg'
+                }
+                else {
+                    type = 'pulse'
+                }
+                const events = chunk.trim().split(', ');
+
+
+                for (let e = 0; e < events.length; e++) {
+                    const event = events[e];
+
+
+                    const eventArr = event.split(' ');
+
+
+                    const eventSixteenthCode = eventArr[0];
+                    const eventStartIndex = sixteenthArray.indexOf(eventSixteenthCode);
+
+                    if (eventStartIndex > -1) {
+                        var loopNum = 0;
+                        for (let b = 0; b < bars; b++) {
+                            var eventObj = new Object;
+                            eventObj.type = type;
+                            eventObj.color = eventArr[1];
+                            var curBarNum = elapsedBars + b;
+
+                            var pulseState;
+                            if (type == 'pulse') {
+                                pulseState = 'on';
+                            }
+
+                            
+
+                            eventObj.start = getMillisecondsStart(eventStartIndex, curBarNum, pulseState);
+
+                            eventsArray.push(eventObj);
+
+                            
+                            if (type == 'pulse') {
+                                var bonusEventObj = new Object;
+                                bonusEventObj.type = type;
+                                bonusEventObj.color = 'transparent';
+                                bonusEventObj.start = getMillisecondsStart(eventStartIndex, curBarNum, 'off');
+
+                                eventsArray.push(bonusEventObj);
+                            }
+
+                        }
+
+
+                    }
+                }
+
+
+            }
+
+            elapsedBars += bars;
+
+
+
+            
+
+
+        }
+        if (status != 'test') {
+            totalBars = elapsedBars;
+        }
+
+        return eventsArray;
+    }
+
+    
+    const colorVarHelper_name = document.querySelector('[name="cvhn"]');
+    const colorVarHelper_hex = document.querySelector('[name="cvhh"]');
+    const colorHexText = document.getElementById('colorHexText');
+    const colorVarHelperArr = [colorVarHelper_name, colorVarHelper_hex];
+    for (let index = 0; index < colorVarHelperArr.length; index++) {
+        const element = colorVarHelperArr[index];
+        element.addEventListener("change", (event) => {
+            
+
+            colorHexText.innerHTML = '\n--' + colorVarHelper_name.value + ':' + colorVarHelper_hex.value;
+        });
+    }
+
+    
+    const htmlElement = document.documentElement;
+    const rootStyle = getComputedStyle(htmlElement);
+
+
+    
+    
+
+    const colorVars = document.getElementById('colorVars');
+    var colorLines = colorVars.value.trim().split('\n');
+    var varIfy = function (name) {
+        return 'var(' + name + ')';
+    }
+
+
+    
+    var createCell = function (type, content) {
+        return '<' + type + '>' + content + '</' + type + '>';
+    }
+
+    var insertColor = function (event) {
+        event.target.closest('td').querySelector('input').value = icvSelect.value;
+    }
+    var clearColor = function (event) {
+        event.target.closest('td').querySelector('input').value = '';
+    }
+
+    var helperGridInputs = document.getElementById('helperGridInputs');
+    var helperGridInputsHtml = '';
+    const helperGridXarr = ['', 'e', 'n', 'a'];
+    const helperGridYarr = [1, 2, 3, 4];
+    const helperGridGroups = ['b', 'p'];
+    for (let i = 0; i < helperGridGroups.length; i++) {
+        const group = helperGridGroups[i];
+        var header;
+        if (group == 'b') {
+            header = 'Background Colors';
+        }
+        else {
+            header = 'Pulse Colors';
+        }
+        helperGridInputsHtml += '<h2>' + header + '</h2>';
+        helperGridInputsHtml += '<table>';
+        helperGridInputsHtml += '<thead>';
+        helperGridInputsHtml += '<tr>';
+        helperGridInputsHtml += createCell('th', '');
+        for (let x = 0; x < helperGridXarr.length; x++) {
+            const xItem = helperGridXarr[x];
+            helperGridInputsHtml += createCell('th', xItem);
+        }
+
+        helperGridInputsHtml += '</tr>';
+        helperGridInputsHtml += '</thead>';
+        helperGridInputsHtml += '<tbody>';
+        for (let x = 0; x < helperGridYarr.length; x++) {
+            const yItem = helperGridYarr[x];
+            helperGridInputsHtml += '<tr>';
+            helperGridInputsHtml += createCell('th', yItem);
+            for (let x = 0; x < helperGridXarr.length; x++) {
+                const xItem = helperGridXarr[x];
+                helperGridInputsHtml += '<td>';
+                helperGridInputsHtml += '<select data-appendable data-group="' + group + '" data-sixteenth="' + yItem + xItem + '" type="text" name="' + group + yItem + xItem + '"></select>';
+                helperGridInputsHtml += '</td>';
+            }
+            helperGridInputsHtml += '</tr>';
+        }
+        helperGridInputsHtml += '</tbody>';
+        helperGridInputsHtml += '</table>';
+
+    }
+    helperGridInputsHtml += '<div><label><span class="block">Bars</span><input type="number" value="1" id="insertableBars" name="insertBars" /></label></div>';
+    helperGridInputsHtml += '<button class="b-red" type="button" onClick="testInsertableColorsDetails(event)">Test Insertable Color Details</button>';
+    helperGridInputsHtml += '<button type="button" onClick="appendColorDetails(event)">Append Selections to Color Details</button>';
+    helperGridInputs.innerHTML = helperGridInputsHtml;
+    
+    
+    
+    
+
+
+    
+
+
+
+    
+
+    const appendableVarSelects = document.querySelectorAll('[data-appendable]');
+    const insertableBars = document.getElementById('insertableBars');
+    const colorDetailsTextarea = document.querySelector('[name="t"]');
+    var moments = new Array;
+    var getReadableCSSVar = function (cssVar) {
+        const regex = /--?([a-zA-Z0-9_-]+)/i;
+        var name = cssVar.match(regex)[0];
+        name = name.replace('--', '');
+        return name;
+    }
+
+    
+    var icvSelectOptions = '<option value=""></option>';
+    for (let index = 0; index < colorLines.length; index++) {
+        const line = colorLines[index];
+        const parts = line.split(':');
+        const cssVar = varIfy(parts[0]);
+
+        document.documentElement.style.setProperty(parts[0], parts[1]);
+        icvSelectOptions += '<option value="' + cssVar + '">' + getReadableCSSVar(cssVar) + '</option>';
+
+    }
+    for (let index = 0; index < appendableVarSelects.length; index++) {
+        const varSelect = appendableVarSelects[index];
+        varSelect.innerHTML = icvSelectOptions;
+    }
+
+    
+
+
+    var testEventsAdded = false;
+    
+    
+    
+    
+    var eventsArrToMomentsArr = function (events) {
+        var moments;
+        return moments;
+    }
+
+    var generateMomentsArray = function (colorEvents) {
+        var moments = new Array;
+        var momentCounter = -1;
+        for (let index = 0; index < colorEvents.length; index++) {
+            const colorEvent = colorEvents[index];
+            const event = new Object;
+            event.type = colorEvent.type;
+            event.color = colorEvent.color;
+
+            if (colorEvent.start != momentCounter) {
+
+                momentCounter = colorEvent.start;
+                var moment = new Object;
+                moment.start = colorEvent.start;
+                moment.events = new Array;
+                moment.events.push(event);
+                moments.push(moment);
+            }
+            else {
+                moments[moments.length - 1].events.push(event);
+            }
+        }
+        return moments;
+    }
+
+
+    
+    var testInsertableColorsDetails = function (event) {
+
+
+
+        if (testEventsAdded != true) {
+
+            colorDetails += colorToolToString(true);
+            var events = generateColorEvents(colorDetails, 'test');
+            moments = generateMomentsArray(events);
+            
+            testEventsAdded = true;
+        }
+        console.log('totalBars: ' + totalBars);
+
+        const accumulatedTime = totalBars * milisecondsPerBar / 1000;
+        audio.currentTime = accumulatedTime - 2;
+
+
+        setTimeout(function(){
+            audio.play();
+        }, 100);
+    }
+
+    var colorToolToString = function (line, test = false) {
+        var text = '';
+        if (line != 'solo') {
+            text += '\n';
+        }
+        var itemCounter = 0;
+        var firstGroup = 'b';
+        var hasItems = false;
+        for (let index = 0; index < appendableVarSelects.length; index++) {
+            const element = appendableVarSelects[index];
+            if (element.value != '') {
+                hasItems = true;
+
+                if (element.dataset.group != firstGroup) {
+                    itemCounter = 0;
+                    firstGroup = 'p';
+                    text += ' / ';
+                }
+
+                itemCounter++;
+                if (itemCounter > 1) {
+                    text += ', ';
+                }
+                text += element.dataset.sixteenth + ' ' + element.value;
+                if (test != false) {
+                    element.value = '';
+                }
+
+            }
+        }
+        text += ' x' + insertableBars.value;
+        if (hasItems) {
+            return text;
+        }
+        else {
+            return '';
+        }
+
+    }
+
+    var appendColorDetails = function (event) {
+
+        colorDetailsTextarea.value += colorToolToString();
+    }
+
+    
+    
+    
+    
+    var appendElementToElement = function (idFrom, idTo) {
+        const elemFrom = document.getElementById(idFrom);
+        console.log(elemFrom.innerText);
+
+        const elemTo = document.getElementById(idTo);
+        const alertElem = elemFrom.nextSibling;
+        elemTo.value = elemTo.value + '\n' + elemFrom.innerText;
+        alertElem.innerHTML = ' Appended!';
+        
+        elemTo.dispatchEvent(new Event('keydown', { 'bubbles': true }))
+        setTimeout(function () { alertElem.innerHTML = ''; }, 1000);
+    }
+
+    const helperToolWrap = document.getElementById('helperToolWrap');
+    var helperToolHtml = '';
+    helperToolHtml += '';
+
+
+
+
+    pulseBox.style.transitionDuration = pulseTransitionDuration / 1000 + 's';
+    pulseBox.style.transitionTimingFunction = pulseTransitionTimingFunction;
+
+
+    var loadEverything = function () {
+
+
+        
+        document.getElementById('formTitle').innerHTML = formTitle;
+
+
+
+
+        
+
+        var colorEvents = generateColorEvents(colorDetails);
+
+        colorEvents.sort(orderStartTimes);
+
+        console.log('color events:');
+
+        console.log(colorEvents);
+
+
+        
+
+
+        moments = generateMomentsArray(colorEvents);
+
+        console.log(moments);
+
+
+        var updateBgColorWeird = function (colorEvents, ellapsed) {
+            function nextTime(time) {
+                return time.start > ellapsed;
+            }
+            var nextIndex = colorEvents.findIndex(nextTime);
+            if (nextIndex != -1) {
+                var prevIndex = nextIndex - 1;
+                var prevIndex2 = nextIndex - 2;
+                var theEvent = colorEvents[prevIndex];
+                var sisterEvent = colorEvents[prevIndex2];
+                var events = new Array;
+                events.push(theEvent);
+                if (prevIndex2 > -1) {
+                    if (theEvent.time == sisterEvent.time) {
+                        events.push(sisterEvent);
+                    }
+                }
+
+                for (let index = 0; index < events.length; index++) {
+
+                    const event = events[index];
+                    var targetBox = bgBox;
+                    if (event.type == 'pulse') {
+                        targetBox = pulseBox;
+                    }
+                    targetBox.style.backgroundColor = event.color;
+                }
+
+            }
+
+
+        }
+
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+
+        
+
+        
+        
+
+
+        
+
+        var updateBgColors = function (events) {
+            var targetBox = bgBox;
+            for (let index = 0; index < events.length; index++) {
+                const event = events[index];
+                if (event.type == 'pulse') {
+                    targetBox = pulseBox;
+                }
+                targetBox.style.backgroundColor = event.color;
+            }
+        }
+
+        bgBox.style.backgroundColor = defaultColor;
+
+        document.getElementById('audioPlayer').innerHTML = '<audio id="audio" controls preload=auto><source src=' + audioURL + ' type=audio/mp4>Your browser does not support the audio element</audio>';
+
+        insertHtml(html);
+
+        const audio = document.getElementById('audio');
+
+
+        
+        
+        
+
+        
+
+        
+        
+        
+        
+
+        
+        
+        
+        
+        
+
+
+        
+
+        
+        
+        
+        
+        var ellapsedTime = 0;
+        var pendingMomentIndex = -1;
+
+        function nextTime(time) {
+            return time.start > ellapsedTime;
+        }
+
+        audio.onplay = function () {
+            bgBox.scrollIntoView();
+            ellapsedTime = audio.currentTime * 1000;
+            pendingMomentIndex = moments.findIndex(nextTime);
+            if (pendingMomentIndex - 1 > -1) {
+                updateBgColors(moments[pendingMomentIndex - 1].events);
+            }
+
+
+            var checkPendingMoment = setInterval(function () {
+                if (moments[pendingMomentIndex]) {
+                    ellapsedTime = audio.currentTime * 1000;
+                    if (ellapsedTime >= moments[pendingMomentIndex].start) {
+                        pendingMomentIndex += 1;
+                        if (pendingMomentIndex - 1 > -1) {
+                            updateBgColors(moments[pendingMomentIndex - 1].events);
+                        }
+                    }
+                }
+
+            }, colorCheckFrequency);
+
+            audio.onpause = function () {
+                pendingMomentIndex = -1;
+                clearInterval(checkPendingMoment);
+            }
+        }
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+
+        
+        
+
+        
+        
+        
+        
+
+    }
+
+    loadEverything();
+    window.addEventListener("formDataStringUpdated", function () {
+        loadEverything();
+    });
+
+
+</script><script type="text/javascript">
+    
+
+const tx = document.querySelectorAll("textarea:not([readonly])");
+
+for (let i = 0; i < tx.length; i++) {
+  tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+  tx[i].addEventListener("input", updateTextareaHeight, false);
+}
+
+function updateTextareaHeight() {
+  this.style.height = 'auto';
+  this.style.height = (this.scrollHeight) + "px";
+}
+
+function updateElemHeight(elem) {
+  console.log(elem);
+  elem.style.height = 'auto';
+  elem.style.height = (elem.scrollHeight) + "px";
+}
+
+</script><script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.4.5/jscolor.min.js"></script>
+<script>
+    jscolor.presets.default = {
+        format:'hex'
+    };
+</script>
+
+
+             </div></main>
+
+
+<script>
+    for (var links = document.querySelectorAll("a[href^=http], a[href^=mailto]"), i = 0, a; a = links[i]; i++) {
+        if (a.host !== location.host) {
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+        }
+    }
+</script>
+</body>
+</html>

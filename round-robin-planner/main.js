@@ -71,8 +71,10 @@ var formData = {};
         // app...
         // var robin = require('roundrobin');
         const peopleData = formData.peopleData.split('\n');
-        console.log('peopleData: '); console.log(peopleData);
+        const locations = formData.locations.split('\n');
 
+        
+        
         // make an array of indices to compare with one of people meeting (to find the solitary person)
         let allPeopleIndices = [];
         for (let index = 0; index < peopleData.length; index++) {
@@ -81,12 +83,58 @@ var formData = {};
         
         
         const robinData = robin(peopleData.length);
-        console.log('robinData: '); console.log(robinData);
         const rounds = robinData.length;
 
-        var html = ''
-        let individualizedInfo = [];
+        const locationsPromptElem = document.getElementById('locationsPrompt');
+        const noPeopleLocationsPromptText = 'Submit your list of names to see how many locations you need to provide.';
+        const neededLocations = Math.floor(peopleData.length/2);
+        if(peopleData.length == 0) {
+          locationsPromptElem.innerHTML = noPeopleLocationsPromptText;
+        }
+        else if(peopleData.length > 0 && locations[0] == '') {
+          locationsPromptElem.innerHTML = `You need to provide <strong>${neededLocations}</strong> locations`;
+        }
+        else if(neededLocations > locations.length) {
+          const additionalLocationsNeeded = neededLocations - locations.length;
+          locationsPromptElem.innerHTML = `You need to provide <strong>${additionalLocationsNeeded}</strong> additional location${additionalLocationsNeeded > 1? 's': ''}`;
+        }
 
+
+        function locationTextFromIndex(locationIndex) {
+          if(locationIndex == null) {
+            if(formData.solitaryLocation != '') {
+              return formData.solitaryLocation; 
+            }
+            else {
+              return 'Solitary Location';
+            }
+            
+          }
+          if(locations[locationIndex] == '' || !locations[locationIndex]) {
+            return 'location ' + (locationIndex + 1);
+          }
+          else {
+            return locations[locationIndex];
+          }
+        }
+
+        var html = ''
+        if(peopleData.length > 1) {
+          html += '<a href="#nav" id="links">Links</a>';
+        }
+
+        html += '<nav id="nav">';
+        html += '<ul>';
+        html += '<li><a href="#form">Form</a></li>';
+        html += '<li><a href="#admin">Admin</a></li>';
+        for (let index = 0; index < peopleData.length; index++) {
+          html += `<li><a href="#p${index}">${peopleData[index]}</a></li>`;
+        }
+        html += '</ul>';
+        html += '</nav>';
+
+        let individualizedInfo = [];
+        html += '<section id="admin">';
         for (let round = 0; round < rounds; round++) {
             const roundArray = robinData[round];
             let peopleMeetingIndexes = [];
@@ -96,7 +144,7 @@ var formData = {};
                 var person1Obj = {};
                 var person2Obj = {};
                 const meetingArray = roundArray[locationIndex];
-                html += `<h3>Location ${locationIndex + 1}</h3>`;
+                html += `<h3>${locationTextFromIndex(locationIndex)}</h3>`;
                 const firstPersonIndex = meetingArray[0] - 1;
                 const secondPersonIndex = meetingArray[1] - 1;
 
@@ -114,12 +162,11 @@ var formData = {};
                 html += `${peopleData[firstPersonIndex]} and ${peopleData[secondPersonIndex]}`;
             }
 
-            // marky
 
             let solitaryPersonIndex = allPeopleIndices.filter(x => !peopleMeetingIndexes.includes(x));
             
             if(solitaryPersonIndex.length > 0) {
-              html += `<h3>Solitary Person</h3>`;
+              html += `<h3>${locationTextFromIndex(null)}</h3>`;
               html += peopleData[solitaryPersonIndex];
               let solitaryObj = {};
               solitaryObj.location = null;
@@ -130,29 +177,31 @@ var formData = {};
             individualizedInfo.push(individualizedInfoRound);
             
         }
-        console.log('individualizedInfo: '); console.log(individualizedInfo);
+        html += '</section>';
+        html += '<div class="allPeopleWrap">'
         
         for (let index = 0; index < peopleData.length; index++) {
           const personName = peopleData[index];
+          html += `<section id="p${index}">`;
           html += `<h1>${personName}</h1>`;
           for (let i = 0; i < individualizedInfo.length; i++) {
             html += `<h2>Round ${i + 1}</h2>`;
             const roundArray = individualizedInfo[i];            
             const you = roundArray[index];
             if(you.partner == null) {
-              html += 'Yourself @ solitary location';
+              html += `Yourself @ ${locationTextFromIndex(null)}`;
             }
             else {
-              html += `${peopleData[you.partner]} @ location ${you.locationIndex + 1}`;
+              html += `${peopleData[you.partner]} @ ${locationTextFromIndex(you.locationIndex)}`;
+              
             }
             
           }
+          html += '</section>';
         }
-
-
-        console.log('individualizedInfo: '); console.log(individualizedInfo);
-        
-
+        html += '</div>';
+     
+      
         document.getElementById('htmlWrap').innerHTML = html;
 
         

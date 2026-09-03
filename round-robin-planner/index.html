@@ -45,6 +45,7 @@
             margin: 0;
             padding: 0;
             border: 0;
+            font-family: Arial, Helvetica, sans-serif;
         }
         /* form */
         .textInput,
@@ -89,11 +90,62 @@
             display: block;
             border: 1px solid black;
         }
+        .bigWrap {
+            display: flex;
+        }
+        #htmlWrap {
+            flex: 1;
+        }
+        section {
+            margin: 1rem 0;
+            padding: 1rem;
+            border: 1rem solid currentColor;
+        }
+        .allPeopleWrap section {
+            min-height: 100vh;
+        }
+        .allPeopleWrap section:nth-child(3n) {
+            color: rgb(0, 103, 117);
+        }
+        .allPeopleWrap section:nth-child(3n + 1) {
+            color: rgb(98, 3, 98);
+        }
+        .allPeopleWrap section:nth-child(3n + 2) {
+            color: rgb(0, 91, 78);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            margin-top: 1em;
+        }
+        section > *:first-child {
+            margin-top: 0;
+        }
+        nav {
+            border: 1px solid black;
+            padding: 1rem;
+            font-size: 1.5rem;
+        }
+        nav ul {
+            list-style-position: inside;
+        }
+        nav li + li {
+            margin-top: 1rem;
+        }
+        a#links {
+            background-color: white;
+            color: blue;
+            font-size: 1.5rem;
+            border: 3px solid currentColor;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+        }
     </style>
 </head>
 <body>
     <h1 style="text-align: center">Round Robin Planner</h1>
-    <form action="">
+    <form id="form" action="">
         <!-- <label>
             <span>Start Date/Time</span>
             <input type="datetime" name="start">
@@ -109,6 +161,19 @@
             <div class="grow-wrap">
             <textarea name="peopleData" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
             </div>
+        </label>
+        <label>
+            <span>Locations (each on their own line)</span>
+            <span>(Default is "location 1", "location 2", etc.)</span>
+            <span id="locationsPrompt"></span>
+            <div class="grow-wrap">
+            <textarea name="locations" onInput="this.parentNode.dataset.replicatedValue = this.value"></textarea>
+            </div>
+        </label>
+        <label>
+            <span>Solitary Location</span>
+            <span>(only needed if you have an odd number of people)</span>
+            <input type="text" name="solitaryLocation">
         </label>
         <button type="submit">Submit</button>
     </form>

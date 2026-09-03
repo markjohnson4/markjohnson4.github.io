@@ -72,46 +72,90 @@ var formData = {};
         // var robin = require('roundrobin');
         const peopleData = formData.peopleData.split('\n');
         console.log('peopleData: '); console.log(peopleData);
+
+        // make an array of indices to compare with one of people meeting (to find the solitary person)
+        let allPeopleIndices = [];
+        for (let index = 0; index < peopleData.length; index++) {
+          allPeopleIndices.push(index);
+        }
+        
         
         const robinData = robin(peopleData.length);
         console.log('robinData: '); console.log(robinData);
         const rounds = robinData.length;
 
         var html = ''
+        let individualizedInfo = [];
 
         for (let round = 0; round < rounds; round++) {
             const roundArray = robinData[round];
             let peopleMeetingIndexes = [];
-            let solitaryPerson = peopleData.slice();// I'll prune this later
+            let individualizedInfoRound = [];
             html += `<h2>Round ${round + 1}</h2>`;
             for (let locationIndex = 0; locationIndex < roundArray.length; locationIndex++) {
+                var person1Obj = {};
+                var person2Obj = {};
                 const meetingArray = roundArray[locationIndex];
                 html += `<h3>Location ${locationIndex + 1}</h3>`;
                 const firstPersonIndex = meetingArray[0] - 1;
                 const secondPersonIndex = meetingArray[1] - 1;
+
+                person1Obj.locationIndex = locationIndex;
+                person2Obj.locationIndex = locationIndex;
+                
+                person1Obj.partner = secondPersonIndex;
+                person2Obj.partner = firstPersonIndex;
+
+                individualizedInfoRound[firstPersonIndex] = person1Obj;
+                individualizedInfoRound[secondPersonIndex] = person2Obj;
+
                 peopleMeetingIndexes.push(firstPersonIndex);
                 peopleMeetingIndexes.push(secondPersonIndex);
                 html += `${peopleData[firstPersonIndex]} and ${peopleData[secondPersonIndex]}`;
-
-               
             }
-            for (let index = 0; index < peopleMeetingIndexes.length; index++) {
-                const personIndex = peopleMeetingIndexes[index];
-                console.log('peopleMeetingIndexes: '); console.log(peopleMeetingIndexes);
 
-                // use this:
-                // https://stackoverflow.com/questions/1187518/how-to-get-the-difference-between-two-arrays-in-javascript
+            // marky
+
+            let solitaryPersonIndex = allPeopleIndices.filter(x => !peopleMeetingIndexes.includes(x));
+            
+            if(solitaryPersonIndex.length > 0) {
+              html += `<h3>Solitary Person</h3>`;
+              html += peopleData[solitaryPersonIndex];
+              let solitaryObj = {};
+              solitaryObj.location = null;
+              solitaryObj.partner = null;
+              individualizedInfoRound[solitaryPersonIndex] = solitaryObj;
+            }
+
+            individualizedInfo.push(individualizedInfoRound);
+            
+        }
+        console.log('individualizedInfo: '); console.log(individualizedInfo);
+        
+        for (let index = 0; index < peopleData.length; index++) {
+          const personName = peopleData[index];
+          html += `<h1>${personName}</h1>`;
+          for (let i = 0; i < individualizedInfo.length; i++) {
+            html += `<h2>Round ${i + 1}</h2>`;
+            const roundArray = individualizedInfo[i];            
+            const you = roundArray[index];
+            if(you.partner == null) {
+              html += 'Yourself @ solitary location';
+            }
+            else {
+              html += `${peopleData[you.partner]} @ location ${you.locationIndex + 1}`;
             }
             
-            html += `<h3>Solitary Location</h3>`;
+          }
         }
+
+
+        console.log('individualizedInfo: '); console.log(individualizedInfo);
+        
 
         document.getElementById('htmlWrap').innerHTML = html;
 
-        // maybe use this! 
-        // although it doesn't currently work with an odd number of people...
-        // https://codepen.io/Piconey/pen/mwPamw
-        // https://github.com/tournament-js/roundrobin is probs better...
+        
 
 // Mark markandersjohnson@gmail.com 217-693-2434
 // John john@gmail.com 111-111-1111

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zine grid</title>
+    <link rel="preload" href="static/OpenDyslexic-Regular.otf" as="font" crossorigin="anonymous" />
+
+    <style>
+
+.grow-wrap {
+  /* easy way to plop the elements on top of each other and have them both sized based on the tallest one's height */
+  display: grid;
+}
+.grow-wrap::after {
+  /* Note the weird space! Needed to preventy jumpy behavior */
+  content: attr(data-replicated-value) " ";
+
+  /* This is how textarea text behaves */
+  white-space: pre-wrap;
+
+  /* Hidden from view, clicks, and screen readers */
+  visibility: hidden;
+}
+.grow-wrap > textarea {
+  /* You could leave this, but after a user resizes, then it ruins the auto sizing */
+  resize: none;
+
+  /* Firefox shows scrollbar on growth, you can hide like this. */
+  overflow: hidden;
+}
+.grow-wrap > textarea,
+.grow-wrap::after {
+  /* Identical styling required!! */
+  border: 1px solid black;
+  padding: 0.5rem;
+  font: inherit;
+
+  /* Place on top of each other */
+  grid-area: 1 / 1 / 2 / 2;
+}
+
+
+
+        @font-face {
+  font-family: 'Open-Dyslexic';
+  src: url('static/OpenDyslexic-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+        hr {
+            border-top: 1px solid rgba(0, 0, 0, 0.5);
+        }
+        @media print {
+            .noPrint {
+                display: none;
+            }
+        }
+        /* form */
+        textarea,
+        input:not([type=checkbox]):not([type=radio]),
+        select {
+            padding: 0.5rem;
+            display: block;
+            border: 1px solid black;
+        }
+        textarea {
+            margin-bottom: 1rem;
+        }
+
+        button {
+            border: 2px solid rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            text-align: center;
+            width: 100%;
+            background: white;
+        }
+        button:focus {
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .textWrap * {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+            line-height: 1.5;
+        }
+        .container, .containerItems > * {
+            max-width: 40ch;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        .fullWidth {
+            max-width: none !important;
+        }
+        .textWrap {
+            /* margin: 1rem auto; */
+            
+            padding: 1rem;
+            margin: 0 0 1rem;
+            background-color: azure;
+            /* border: 2px solid rgb(45, 152, 246);
+            background-color: azure; */
+            
+        }
+        p,
+        label {
+            display: block;
+            margin: 1rem 0;
+        }
+        label>span {
+            display: block;
+            padding-bottom: 0.2rem;
+        }
+
+        /* app */
+        :root {
+            --cmPerInch: 2.54;
+            --pointsPerInch: 72;
+            --pointsPerCm: calc(var(--pointsPerInch)/var(--cmPerInch)); /* 28.3465 */
+
+            --pageWidthPt: calc(var(--pointsPerInch)*8.5pt);
+            --pageHeightPt: calc(var(--pointsPerInch)*11pt);
+            
+            
+
+            --leftMarginPt: calc(var(--leftMarginCm)*var(--pointsPerCm)*1pt);
+            --rightMarginPt: calc(var(--rightMarginCm)*var(--pointsPerCm)*1pt);
+            --topMarginPt: calc(var(--topMarginCm)*var(--pointsPerCm)*1pt);
+            --bottomMarginPt: calc(var(--bottomMarginCm)*var(--pointsPerCm)*1pt);
+
+
+
+            --adjustedPageWidthPt: calc(var(--pageWidthPt) - var(--leftMarginPt) - var(--rightMarginPt));
+            --adjustedPageHeightPt: calc(var(--pageHeightPt) - var(--topMarginPt) - var(--bottomMarginPt));
+
+            --percentBoostWidth: calc(var(--pageHeightPt)/var(--adjustedPageHeightPt));
+            --percentBoostHeight: calc(var(--pageWidthPt)/var(--adjustedPageWidthPt));
+
+            --defaultZinePageHeightPt: calc((var(--pageWidthPt)/2)*var(--percentBoostHeight));
+            --defaultZinePageWidthPt: calc((var(--pageHeightPt)/4)*var(--percentBoostWidth));
+
+            
+            --leftSideZinePagesHeightPt: calc((var(--defaultZinePageHeightPt) - var(--leftMarginPt))*var(--percentBoostHeight));
+
+            --rightSideZinePagesHeightPt: calc((var(--defaultZinePageHeightPt) - var(--rightMarginPt))*var(--percentBoostHeight));
+
+            --topSideZinePagesWidthPt: calc((var(--defaultZinePageWidthPt) - var(--topMarginPt))*var(--percentBoostWidth));
+
+            --bottomSideZinePagesWidthPt: calc((var(--defaultZinePageWidthPt) - var(--bottomMarginPt))*var(--percentBoostWidth));
+        }
+        .page {
+            position: relative;
+            /* when I thought I needed to scale down...  */
+            /* width: var(--adjustedPageWidthPt);
+            height: var(--adjustedPageHeightPt); */
+
+            width: var(--pageWidthPt);
+            height: var(--pageHeightPt);
+
+            font-family: var(--font);
+            font-size: calc(var(--textSize)*1px);
+            line-height: var(--lineHeight);
+        }
+        .page > div {
+            
+            height: var(--defaultZinePageHeightPt);
+            width: var(--defaultZinePageWidthPt);
+            padding: var(--boxPad);
+            overflow:hidden;
+            
+        }
+        
+        /* left side of page...  */
+        .page > div:nth-child(8),
+        .page > div:nth-child(1),
+        .page > div:nth-child(2),
+        .page > div:nth-child(3) {
+            height: var(--leftSideZinePagesHeightPt);
+            border-top: 1px dashed rgba(0, 0, 0, 0.5);
+            border-right: 1px dashed rgba(0, 0, 0, 0.5);
+            padding-bottom: var(--leftPageEdgeZinePadding);
+        }
+        .page > div:nth-child(3) {
+            border-right: none;
+        }
+        /* right side of page...  */
+        .page > div:nth-child(7),
+        .page > div:nth-child(6),
+        .page > div:nth-child(5),
+        .page > div:nth-child(4) {
+            height: var(--rightSideZinePagesHeightPt);
+            border-left: 1px dashed rgba(0, 0, 0, 0.5);
+            padding-bottom: var(--rightPageEdgeZinePadding);
+        }
+        .page > div:nth-child(4) {
+            border-left: none;
+        }
+        
+        /* top of page  */
+        .page > div:nth-child(8),
+        .page > div:nth-child(7) {
+            width: var(--topSideZinePagesWidthPt);
+        }
+        /* bottom of page  */
+        .page > div:nth-child(3),
+        .page > div:nth-child(4) {
+            width: var(--bottomSideZinePagesWidthPt);
+        }
+
+        .page > div {
+            padding-bottom: 0;
+        }
+        .page > div:nth-child(8) {
+            padding-left: var(--topPageEdgeZinePadding);
+        }
+        .page > div:nth-child(7) {
+            padding-right: var(--topPageEdgeZinePadding);
+        }
+        .page > div:nth-child(3) {
+            padding-right: var(--bottomPageEdgeZinePadding);
+        }
+        .page > div:nth-child(4) {
+            padding-left: var(--bottomPageEdgeZinePadding);
+        } 
+
+
+        /* positioning...  */
+        /* right side of page...  */
+        @media print {
+        .page > div {
+            position: absolute;
+        }
+        /* left side of the page  */
+        .page > div:nth-child(8),
+        .page > div:nth-child(1),
+        .page > div:nth-child(2),
+        .page > div:nth-child(3) {
+            left: var(--leftSideZinePagesHeightPt);
+            transform-origin: top left;
+        }
+        .page > div:nth-child(8) {
+            transform: rotate(0.25turn);
+        }
+        .page > div:nth-child(1) {
+            transform: translateY(var(--topSideZinePagesWidthPt))  rotate(0.25turn);
+        }
+        .page > div:nth-child(2) {
+            transform: translateY(calc(var(--topSideZinePagesWidthPt) + var(--defaultZinePageWidthPt)))  rotate(0.25turn);
+        }
+        .page > div:nth-child(3) {
+            transform: translateY(calc(var(--topSideZinePagesWidthPt) + var(--defaultZinePageWidthPt)*2))  rotate(0.25turn);
+        }
+        /* right side of page  */
+        .page > div:nth-child(7),
+        .page > div:nth-child(6),
+        .page > div:nth-child(5),
+        .page > div:nth-child(4) {
+            right: var(--rightSideZinePagesHeightPt);
+            transform-origin: top right;
+        }
+        .page > div:nth-child(7) {
+            transform: rotate(-0.25turn);
+        }
+        .page > div:nth-child(6) {
+            transform: translateY(var(--topSideZinePagesWidthPt)) rotate(-0.25turn);
+        }
+        .page > div:nth-child(5) {
+            transform: translateY(calc(var(--topSideZinePagesWidthPt) + var(--defaultZinePageWidthPt))) rotate(-0.25turn);
+        }
+        .page > div:nth-child(4) {
+            transform: translateY(calc(var(--topSideZinePagesWidthPt) + var(--defaultZinePageWidthPt)*2))  rotate(-0.25turn);
+        }
+        
+    }
+
+        .page {
+            font-kerning: none; 
+            /* requirement of splittype */
+        }
+        .blankLine {
+            opacity: 0;
+            display: block !important;
+        }
+        #alert {
+            margin-bottom: 1rem;
+            border: 1px solid black;
+            padding: 1rem;
+            background-color: #fff;
+            color: red;
+        }
+        #alert:empty {
+            display: none;
+        }
+        fieldset {
+            border: 5px solid rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+            padding: 0  1rem;
+            margin: 0 0 1rem;
+        }
+        legend {
+            text-align: left;
+            margin: 0;
+            padding: 0 1rem;
+        }
+        /* fieldset {
+            padding: 1rem 0;
+
+        }
+        fieldset:nth-child(even) {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        fieldset:nth-child(odd) {
+            background: rgba(0, 0, 0, 0.2);
+        } */
+
+    </style>
+</head>
+
+<body>
+
+    <div class="noPrint textWrap">
+        <div class="containerItems">
+<div id="alert"></div>
+        <h1>Card Text</h1>   
+            <p>Fill out the form below and click submit to generate your cards.</p>
+            <p>All your form values will be saved in the URL. That means that you can bookmark your zine or share it with others!</p>    
+        </div>
+     
+        
+        <form action="">
+            
+            <fieldset class="container">
+
+            <legend>Zine Settings</legend>
+            <p>If you're starting your zine, click here to autopopulate these </p>
+            <label id="zinePagePaddingField">
+                <span>Inner Padding of each Page (cm)</span>
+                <input type="number" name="innerPagePadding" step="0.1" />
+            </label>
+            
+            
+            <label>
+                <span>Text Size (pixels)</span>
+                <input type="number" name="textSize" />
+            </label>
+            <label>
+                <span>Text Line Height (Multiplier of Text Size)</span>
+                <input type="number" name="lineHeight" step="0.1" />
+            </label>
+            <label>
+                <span>Text Font</span>
+                <input type="text" name="font" />
+            </label>
+            <p>"Text Font" can be any <a href="https://www.w3schools.com/cssref/css_websafe_fonts.php" target="_blank">browser supported font</a> or <code>'Open-Dyslexic'</code> (currently buggy - I'm working on it!)</p>
+            </fieldset>
+            <fieldset class="container">
+                <legend>Card text (one per line)</legend>
+                <div class="grow-wrap">
+                <textarea onInput="this.parentNode.dataset.replicatedValue = this.value" name="text"></textarea>
+                </div>
+            </fieldset>
+            <fieldset class="container">
+            <legend>Printer details</legend>
+            <p><a href="https://markjohnson4.github.io/grid.html?pages=1&rows=32&columns=25">Print a test grid</a> to see how your printer deals with full width/height content.</p>
+            
+            <label>
+                <span>How does your printer deal with full width/height content?</span>
+                <select name="printerManipulation" required>
+                    <option value="">Select option</option>
+                    <option value="cutOff">It cuts off its edges</option>
+                    <option value="shrink">It shrinks it down</option>
+                </select>
+            </label>
+            <p>*If your printer cuts off the outer grid rectangles, then set all these margin fields to "0" and make sure your <a href="#zinePagePaddingField">zine page padding</a> is equal to or larger than how much content gets cut off from the edge.</p>
+            <label>
+                <span>Top Margin (cm)</span>
+                <input type="number" name="topMarginCm" step="0.1" />
+            </label>
+            <label>
+                <span>Right Margin (cm)</span>
+                <input type="number" name="rightMarginCm" step="0.1" />
+            </label>
+            <label>
+                <span>Bottom Margin (cm)</span>
+                <input type="number" name="bottomMarginCm" step="0.1" />
+            </label>
+            <label>
+                <span>Left Margin (cm)</span>
+                <input type="number" name="leftMarginCm" step="0.1" />
+            </label>
+            </fieldset>
+            <div>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <div id="html"></div>
+    <div class="page">
+        <div id="page1"></div>
+        <div id="page2"></div>
+        <div id="page3"></div>
+        <div id="page4"></div>
+        <div id="page5"></div>
+        <div id="page6"></div>
+        <div id="page7"></div>
+        <div id="page8"></div>
+    </div>
+
+</body>
+<script src="https://unpkg.com/split-type"></script>
+
+<script>
+        // if the form was submitted and the url has new search parameters, then auto-populate the form to whatever those are
+        // like this: https://stackoverflow.com/questions/14070105/pre-fill-form-field-via-url-in-html
+
+        // a formData object to be used in the app
+        var formData = {};
+
+        // getting data in the form piece by piece
+        var urlObject = new URL(window.location.href);
+
+
+        urlObject.searchParams.forEach((value, name) => {
+            // save the info to the formData object
+            formData[name] = value;
+
+            // put data back into form
+            var input = document.querySelector(`[name="${name}"]`);
+            if (input) {
+                var inputType = input.type;
+                if (inputType == 'checkbox') {
+                    if (value == 'on') {
+
+                        input.checked = true;
+                    }
+                }
+                else if (inputType == 'radio') {
+                    document.querySelector('[name="' + name + '"][value="' + value + '"]').checked = true;
+                }
+                else {
+                    document.querySelector('[name="' + name + '"]').value = value;
+                }
+            }
+        });
+
+        const blankLineClass = 'blankLine';
+        const blankLineHtml = `<div class="${blankLineClass}" style="display: inline-block; position: relative;">.</div>`;
+        const lineBreakHtml = '<br />';
+
+        // clean up text
+        var text = formData.text;
+        text = text.replace(/\n\s*\n/g, blankLineHtml);
+        text = text.replace(/(\n)+/g, lineBreakHtml);
+        function convertCmToPts(cm) {
+            return (cm/2.54)*72;
+        }
+        // console.log('text: '); console.log(text);
+        
+
+        document.documentElement.style.setProperty('--textSize', formData.textSize);
+        document.documentElement.style.setProperty('--lineHeight', formData.lineHeight);
+        document.documentElement.style.setProperty('--font', formData.font);
+
+        const topMarginCm = formData.topMarginCm;
+        const rightMarginCm = formData.rightMarginCm;
+        const bottomMarginCm = formData.bottomMarginCm;
+        const leftMarginCm = formData.leftMarginCm;
+
+        const topMarginPts = convertCmToPts(topMarginCm);
+        const rightMarginPts = convertCmToPts(rightMarginCm);
+        const bottomMarginPts = convertCmToPts(bottomMarginCm);
+        const leftMarginPts = convertCmToPts(leftMarginCm);
+
+        const ptsPerInch = 72;
+        const pageWidthPts = ptsPerInch*8.5;
+        const pageHeightPts = ptsPerInch*11;
+
+        const defaultZinePageWidthPts = pageHeightPts/4;
+        const defaultZinePageHeightPts = pageWidthPts/2;
+
+        console.log('defaultZinePageWidthPts: '); console.log(defaultZinePageWidthPts);
+        console.log('defaultZinePageHeightPts: '); console.log(defaultZinePageHeightPts);
+        
+        
+
+        const adjustedPageWidthPts = pageWidthPts - rightMarginPts - leftMarginPts;
+        const adjustedPageHeightPts = pageHeightPts - topMarginPts - bottomMarginPts;
+
+        const zinePageWidthBoost = pageHeightPts/adjustedPageHeightPts;
+        const zinePageHeightBoost = pageWidthPts/adjustedPageWidthPts;
+
+        const boostedDefaultZinePageWidthPts = defaultZinePageWidthPts*zinePageWidthBoost;
+
+        const boostedDefaultZinePageHeightPts = defaultZinePageHeightPts*zinePageHeightBoost;
+
+        const boostedTopZinePagesWidth = (defaultZinePageWidthPts - topMarginPts)*zinePageWidthBoost;
+
+        const boostedBottomZinePagesWidth = (defaultZinePageWidthPts - bottomMarginPts)*zinePageWidthBoost;
+
+        const boostedLeftZinePagesHeight = (defaultZinePageHeightPts - leftMarginPts)*zinePageHeightBoost;
+
+        const boostedRightZinePagesHeight = (defaultZinePageHeightPts - rightMarginPts)*zinePageHeightBoost;
+
+        
+        document.documentElement.style.setProperty('--defaultZinePageWidthPt', boostedDefaultZinePageWidthPts+'pt');
+        document.documentElement.style.setProperty('--defaultZinePageHeightPt', boostedDefaultZinePageHeightPts+'pt');
+
+        document.documentElement.style.setProperty('--topSideZinePagesWidthPt', boostedTopZinePagesWidth+'pt');
+        document.documentElement.style.setProperty('--bottomSideZinePagesWidthPt', boostedBottomZinePagesWidth+'pt');
+        document.documentElement.style.setProperty('--leftSideZinePagesHeightPt', boostedLeftZinePagesHeight+'pt');
+        document.documentElement.style.setProperty('--rightSideZinePagesHeightPt', boostedRightZinePagesHeight+'pt');
+
+
+        
+
+        document.documentElement.style.setProperty('--topMarginCm', formData.topMarginCm);
+        document.documentElement.style.setProperty('--rightMarginCm', formData.rightMarginCm);
+        document.documentElement.style.setProperty('--bottomMarginCm', formData.bottomMarginCm);
+        document.documentElement.style.setProperty('--leftMarginCm', formData.leftMarginCm);
+
+        const printerManipulation = formData.printerManipulation;
+        // marky
+        const defaultZinePaddingPts = formData.innerPagePadding;
+        const defaultZinePadding = convertCmToPts(defaultZinePaddingPts)+'pt';
+        document.documentElement.style.setProperty('--boxPad', defaultZinePadding);
+        // var topEdgeZinePadding
+        var topPageEdgeZinePadding = defaultZinePadding;
+        var bottomPageEdgeZinePadding = defaultZinePadding;
+        var leftPageEdgeZinePadding = defaultZinePadding;
+        var rightPageEdgeZinePadding = defaultZinePadding;
+if(printerManipulation == 'cutOff') {
+    // no zine pages should be reduced in size or boosted - can be solved for now by making the margins "0"
+    // for each margin, if the edge padding is smaller, it should be increased to be equal
+    
+}
+else {
+// for each margin, if the margin is equal or greater than the padding, then the padding should be zero.  Otherwise the padding should be reduced by the amount of the margin
+// for now...
+var topPageEdgeZinePadding = 0;
+        var bottomPageEdgeZinePadding = 0;
+        var leftPageEdgeZinePadding = 0;
+        var rightPageEdgeZinePadding = 0;
+}
+
+document.documentElement.style.setProperty('--topPageEdgeZinePadding', topPageEdgeZinePadding);
+document.documentElement.style.setProperty('--bottomPageEdgeZinePadding', bottomPageEdgeZinePadding);
+document.documentElement.style.setProperty('--leftPageEdgeZinePadding', leftPageEdgeZinePadding);
+document.documentElement.style.setProperty('--rightPageEdgeZinePadding', rightPageEdgeZinePadding);
+        
+
+        const cmPerInch = 2.54;
+        const pageWidthInches = 8.5;
+        const pageHeightInches = 11;
+
+        const pageWidthCm = pageWidthInches*cmPerInch;
+        const pageHeightCm = pageHeightInches*cmPerInch;
+
+        const zinePageDefaultWidthCm = pageHeightCm/4;
+        const zinePageDefaultHeightCm = pageWidthCm/2;
+        
+
+        document.documentElement.style.setProperty('--zinePageDefaultWidthCm', zinePageDefaultWidthCm);
+        document.documentElement.style.setProperty('--zinePageDefaultHeightCm', zinePageDefaultHeightCm);
+
+        const actualPageContentHeightCm = pageHeightCm - topMarginCm - bottomMarginCm;
+        const actualPageContentWidthCm = pageWidthCm - rightMarginCm - leftMarginCm;
+
+        document.documentElement.style.setProperty('--actualPageContentHeightCm', actualPageContentHeightCm);
+        document.documentElement.style.setProperty('--actualPageContentWidthCm', actualPageContentWidthCm);
+
+        // const topMarginVh = topMarginCm*100/pageHeightCm;
+        // const rightMarginVw = rightMarginCm*100/pageWidthCm;
+        // const bottomMarginVh = bottomMarginCm*100/pageHeightCm;
+        // const leftMarginVw = leftMarginCm*100/pageWidthCm;
+
+        // const 
+
+        // const pageTopZinePagesAltWidth = 
+
+        function stripHtml(html){
+   let doc = new DOMParser().parseFromString(html, 'text/html');
+   return doc.body.textContent || "";
+}
+
+
+        // var linesCounter = 0;
+        const totalPages = 8;
+        // var totalLines;
+
+        // For every page... 
+        // 1. I get the total possible lines that could exist given that page's boundaries
+        // 2. I dump the entire text in the page so the text wraps correctly based on that page's boundaries
+        // 3. I take out only the lines that belong to that page and dump them in the page html box 
+        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+            // if(pageNum == 2) {
+            //     break;
+            // }
+
+            var thisPageId = 'page'+pageNum;
+            var thisPage = document.getElementById(thisPageId);
+            thisPage.innerHTML = text;
+            
+            
+            const linedText = new SplitType('#'+thisPageId, { types: 'lines' });
+            var totalHeight = thisPage.clientHeight;
+            var cs = getComputedStyle(thisPage);
+            var totalPagePaddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+            var contentHeight = totalHeight - totalPagePaddingY;
+            var lineHeight = cs.lineHeight;
+            var firstLineInfo = linedText.lines[0].getBoundingClientRect();
+            var maxLines = Math.floor(contentHeight/firstLineInfo.height);
+            var pageHtml = '';
+            // var textToPull = '';
+            for (let index = 0; index < maxLines; index++) {
+                if(linedText.lines.length == index) {
+                    break;
+                }
+                var lineHtml = linedText.lines[index].innerHTML;
+                
+                const lineHtmlLength = lineHtml.length;
+                const indexOfThisLine = text.indexOf(lineHtml);
+                
+                text = text.slice(indexOfThisLine + lineHtmlLength)
+
+                // if(lineHtml.includes(blankLineClass)) {
+                //     lineHtml = blankLineHtml;
+                // }
+                // else {
+                //     lineHtml += ' ';
+                // }
+
+                
+                pageHtml += linedText.lines[index].outerHTML;
+                // console.log('linedText.lines[index]: '); console.log(linedText.lines[index]);
+                
+            }
+            
+            
+
+            // linesCounter += maxLines;
+            // if(pageNum == totalPages) {
+            //     totalLines = linedText.lines.length;
+            // }
+
+
+            // for (let l = linesCounter; l < (linesCounter + maxLines); l++) {
+            //     if(l >= linedText.lines.length) {
+            //         break;
+            //     }
+            //     const line = linedText.lines[l].outerHTML;
+            //     pageHtml += line;
+            // }
+            // 
+            // 
+           
+            thisPage.innerHTML = pageHtml;
+            // SplitType.revert('#'+thisPageId);
+        }
+
+        
+        // error message
+        const excessCharacters = text.length;
+        const alertElement = document.getElementById('alert');
+        if(excessCharacters > 0) {
+            alertElement.innerHTML = `Warning! Your text has <strong>${excessCharacters}</strong> more characters than your zine has space for!`;
+        }
+        else {
+            alertElement.innerHTML = '';
+        }
+
+    </script>
+
+</html>
